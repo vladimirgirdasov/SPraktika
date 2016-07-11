@@ -10,5 +10,6 @@ namespace SPraktika
     {
         string Address { get; }
 
+        string Read();
     }
 }
