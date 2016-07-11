@@ -12,8 +12,8 @@ namespace SPraktika
 
         public struct Rating
         {
-            public string Name { get; set; }
-            public string Price { get; set; }
+            public string Currency { get; set; }
+            public string Rate { get; set; }
         }
     }
 }

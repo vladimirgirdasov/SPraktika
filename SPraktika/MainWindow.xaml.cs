@@ -24,7 +24,9 @@ namespace SPraktika
         {
             InitializeComponent();
             EuropeanCentralBank ecb = new EuropeanCentralBank();
-            tbConsole.Text = ecb.Read();
+            ecb.Read();
+            tbConsole.Text = ecb.Show();
+            tbConsole.Text += "==============";
         }
     }
 }
