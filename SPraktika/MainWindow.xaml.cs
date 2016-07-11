@@ -23,10 +23,12 @@ namespace SPraktika
         public MainWindow()
         {
             InitializeComponent();
-            EuropeanCentralBank ecb = new EuropeanCentralBank();
-            ecb.Read();
-            tbConsole.Text = ecb.Show();
-            tbConsole.Text += "==============";
+            //EuropeanCentralBank ecb = new EuropeanCentralBank();
+            //ecb.Read();
+            //tbConsole.Text = ecb.Show();
+            //tbConsole.Text += "==============";
+            CentralBankofRussia cbr = new CentralBankofRussia();
+            cbr.Read();
         }
     }
 }
