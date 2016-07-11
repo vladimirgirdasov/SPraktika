@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SPraktika.CurrencyData">
+    <Position X="4.25" Y="0.75" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="SPraktika.CurrencyData.Rating" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CurrencyData.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CurrencyData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SPraktika.EuropeanCentralBank">
+    <Position X="4.25" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAIAAAACgAAAAACAAAA=</HashCode>
+      <FileName>EuropeanCentralBank.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="SPraktika.IXmlPage">
+    <Position X="0.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>IXmlPage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

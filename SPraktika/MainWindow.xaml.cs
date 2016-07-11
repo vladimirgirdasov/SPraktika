@@ -23,6 +23,8 @@ namespace SPraktika
         public MainWindow()
         {
             InitializeComponent();
+            EuropeanCentralBank ecb = new EuropeanCentralBank();
+            tbConsole.Text = ecb.Read();
         }
     }
 }
