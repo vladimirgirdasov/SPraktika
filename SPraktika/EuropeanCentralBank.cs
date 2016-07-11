@@ -20,17 +20,12 @@ namespace SPraktika
 
         public string Address
         {
-            get
-            {
-                return address;
-            }
+            get { return address; }
         }
 
         public void Read()
         {
-            WebClient client = new WebClient();
-            Stream stream = client.OpenRead(this.Address);
-            XDocument xdoc = XDocument.Load(stream);
+            XDocument xdoc = XDocument.Load(new WebClient().OpenRead(this.Address));
 
             var items = from xe in xdoc.Element(ns_gesmes + "Envelope").Element(ns + "Cube").Element(ns + "Cube").Elements(ns + "Cube")
                         select new Rating
@@ -39,7 +34,7 @@ namespace SPraktika
                             Rate = xe.Attribute("rate").Value.Replace(".", ",")
                         };
 
-            //т.к. ecb предоставляет данные относительно ЕВРО, пересчитаем курс на рубли
+            //т.к.ecb предоставляет данные относительно ЕВРО, пересчитаем курс на рубли
             var koef = from xe in xdoc.Element(ns_gesmes + "Envelope").Element(ns + "Cube").Element(ns + "Cube").Elements(ns + "Cube")
                        where xe.Attribute("currency").Value == "RUB"
                        select new Rating
@@ -47,9 +42,13 @@ namespace SPraktika
                            Currency = xe.Attribute("currency").Value,
                            Rate = xe.Attribute("rate").Value.Replace(".", ",")
                        };
-
             foreach (var item in items)
-                CurrencyRates.Add(item.Currency, Convert.ToDouble(item.Rate) * 1 / Convert.ToDouble(koef.First().Rate));
+            {
+                double tmp = Convert.ToDouble(item.Rate) / Convert.ToDouble(koef.First().Rate);
+                CurrencyRates.Add(item.Currency, Convert.ToDouble(koef.First().Rate) / (Convert.ToDouble(item.Rate)));
+            }
+            CurrencyRates.Remove("RUB");
+            CurrencyRates.Add("EUR", Convert.ToDouble(koef.First().Rate));
         }
 
         public string Show()

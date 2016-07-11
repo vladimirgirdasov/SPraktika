@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SPraktika
 {
@@ -10,6 +11,11 @@ namespace SPraktika
         {
             public string Currency { get; set; }
             public string Rate { get; set; }
+        }
+
+        public void CalcAverageCurrencyRate()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="SPraktika.EuropeanCentralBank">
-    <Position X="0.5" Y="3.5" Width="2" />
+    <Position X="0.75" Y="4" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAIEAAACgAAAAACAAAA=</HashCode>
       <FileName>EuropeanCentralBank.cs</FileName>
@@ -9,9 +9,12 @@
     <Lollipop Position="1.55" />
   </Class>
   <Class Name="SPraktika.CurrencyData">
-    <Position X="0.75" Y="0.5" Width="3" />
+    <Position X="1.75" Y="0.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
     <NestedTypes>
-      <Struct Name="SPraktika.CurrencyData.Rating" Collapsed="true">
+      <Struct Name="SPraktika.CurrencyData.Rating">
         <TypeIdentifier>
           <NewMemberFileName>CurrencyData.cs</NewMemberFileName>
         </TypeIdentifier>
@@ -23,15 +26,23 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SPraktika.CentralBankofRussia">
-    <Position X="3" Y="3.5" Width="2" />
+    <Position X="3.5" Y="4" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAIEAAACAAAAAAAAAAA=</HashCode>
       <FileName>CentralBankofRussia.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="1.55" />
   </Class>
-  <Interface Name="SPraktika.IXmlPage">
-    <Position X="4.75" Y="0.5" Width="2" />
+  <Class Name="SPraktika.MainWindow" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="SPraktika.IXmlPage" Collapsed="true">
+    <Position X="6.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAEAAACAAAAAAAAAAA=</HashCode>
       <FileName>IXmlPage.cs</FileName>
