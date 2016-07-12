@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Windows;
 using System.Xml.Linq;
 
 namespace SPraktika
@@ -19,32 +20,38 @@ namespace SPraktika
 
         public void Read(HashSet<string> ABC)
         {
-            XDocument xdoc = XDocument.Load(new WebClient().OpenRead(this.Address));
-
-            var items = from xe in xdoc.Element(ns_gesmes + "Envelope").Element(ns + "Cube").Element(ns + "Cube").Elements(ns + "Cube")
-                        select new Rating
-                        {
-                            Currency = xe.Attribute("currency").Value,
-                            Rate = xe.Attribute("rate").Value.Replace(".", ",")
-                        };
-
-            //т.к.ecb предоставляет данные относительно ЕВРО, пересчитаем курс на рубли
-            var koef = from xe in xdoc.Element(ns_gesmes + "Envelope").Element(ns + "Cube").Element(ns + "Cube").Elements(ns + "Cube")
-                       where xe.Attribute("currency").Value == "RUB"
-                       select new Rating
-                       {
-                           Currency = xe.Attribute("currency").Value,
-                           Rate = xe.Attribute("rate").Value.Replace(".", ",")
-                       };
-            foreach (var item in items)
+            try
             {
-                CurrencyRates.Add(item.Currency, Convert.ToDouble(koef.First().Rate) / (Convert.ToDouble(item.Rate)));
+                XDocument xdoc = XDocument.Load(new WebClient().OpenRead(this.Address));
+
+                var items = from xe in xdoc.Element(ns_gesmes + "Envelope").Element(ns + "Cube").Element(ns + "Cube").Elements(ns + "Cube")
+                            select new Rating
+                            {
+                                Currency = xe.Attribute("currency").Value,
+                                Rate = xe.Attribute("rate").Value.Replace(".", ",")
+                            };
+
+                //т.к.ecb предоставляет данные относительно ЕВРО, пересчитаем курс на рубли
+                var koef = from xe in xdoc.Element(ns_gesmes + "Envelope").Element(ns + "Cube").Element(ns + "Cube").Elements(ns + "Cube")
+                           where xe.Attribute("currency").Value == "RUB"
+                           select new Rating
+                           {
+                               Currency = xe.Attribute("currency").Value,
+                               Rate = xe.Attribute("rate").Value.Replace(".", ",")
+                           };
+                foreach (var item in items)
+                {
+                    CurrencyRates.Add(item.Currency, Convert.ToDouble(koef.First().Rate) / (Convert.ToDouble(item.Rate)));
+                }
+                CurrencyRates.Remove("RUB");
+                CurrencyRates.Add("EUR", Convert.ToDouble(koef.First().Rate));
+                //add 2 abc
+                Add_Currenies_to_Global_Dictionary(ABC);
             }
-            CurrencyRates.Remove("RUB");
-            CurrencyRates.Add("EUR", Convert.ToDouble(koef.First().Rate));
-            //add 2 abc
-            foreach (var item in CurrencyRates)
-                ABC.Add(item.Key);
+            catch (Exception e)
+            {
+                MessageBox.Show("Target site: " + e.TargetSite.ToString() + "\nMessage: " + e.Message + "\nSource: " + e.Source, "Exception в чтении из " + Address);
+            }
         }
 
         public string Show()

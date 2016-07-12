@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,25 +30,22 @@ namespace SPraktika
             CentralBankofRussia cbr = new CentralBankofRussia();
             YahooFinance yf = new YahooFinance();
             BLRFinanceInfo blr = new BLRFinanceInfo();
-            CurrencyData AVG = new CurrencyData();
+            CurrencyData AverageData = new CurrencyData();
 
-            ReadSourceDlg ReadSources = new ReadSourceDlg(ecb.Read);
+            ReadSourceDlg ReadSources = new ReadSourceDlg(blr.Read);
             ReadSources += cbr.Read;
+            ReadSources += ecb.Read;
             ReadSources += yf.Read;
-            ReadSources += blr.Read;
-            ReadSources(AVG.abc);
-
-            #region Tmp_Out
+            ReadSources(AverageData.abc);
 
             tbConsole.Text = ecb.Show();
             tbConsole2.Text = cbr.Show();
             tbConsole3.Text = yf.Show();
-            AVG.CalcAverageCurrencyRate(ecb, cbr, yf);
+            tbConsole5.Text = blr.Show();
+            AverageData.CalcAverageCurrencyRate(ecb, cbr, yf, blr);
             tbConsole4.Text = "";
-            foreach (var item in AVG.CurrencyRates)
+            foreach (var item in AverageData.CurrencyRates)
                 tbConsole4.Text += item.Key + " = " + item.Value.ToString() + "руб.\n";
-
-            #endregion Tmp_Out
         }
     }
 }

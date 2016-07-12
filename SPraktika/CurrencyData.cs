@@ -34,6 +34,12 @@ namespace SPraktika
             }
         }
 
+        public void Add_Currenies_to_Global_Dictionary(HashSet<string> ABC)
+        {
+            foreach (var item in CurrencyRates)
+                ABC.Add(item.Key);
+        }
+
         public IEnumerator GetEnumerator()
         {
             return ((IEnumerable)abc).GetEnumerator();
