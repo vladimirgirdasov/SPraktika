@@ -40,7 +40,6 @@ namespace SPraktika
                        };
             foreach (var item in items)
             {
-                double tmp = Convert.ToDouble(item.Rate) / Convert.ToDouble(koef.First().Rate);
                 CurrencyRates.Add(item.Currency, Convert.ToDouble(koef.First().Rate) / (Convert.ToDouble(item.Rate)));
             }
             CurrencyRates.Remove("RUB");
