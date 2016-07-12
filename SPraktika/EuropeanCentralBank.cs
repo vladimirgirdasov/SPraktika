@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -13,17 +14,12 @@ namespace SPraktika
         private XNamespace ns_gesmes = "http://www.gesmes.org/xml/2002-08-01";//xmlns namespaces
         private XNamespace ns = "http://www.ecb.int/vocabulary/2002-08-01/eurofxref";
 
-        public EuropeanCentralBank()
-        {
-            CurrencyRates = new System.Collections.Generic.Dictionary<string, double>();
-        }
-
         public string Address
         {
             get { return address; }
         }
 
-        public void Read()
+        public void Read(HashSet<string> ABC)
         {
             XDocument xdoc = XDocument.Load(new WebClient().OpenRead(this.Address));
 
@@ -49,6 +45,9 @@ namespace SPraktika
             }
             CurrencyRates.Remove("RUB");
             CurrencyRates.Add("EUR", Convert.ToDouble(koef.First().Rate));
+            //add 2 abc
+            foreach (var item in CurrencyRates)
+                ABC.Add(item.Key);
         }
 
         public string Show()
@@ -56,7 +55,7 @@ namespace SPraktika
             string ans = "";
             foreach (var item in CurrencyRates)
             {
-                ans += item.Key + " = " + item.Value.ToString() + "\n";
+                ans += item.Key + " = " + item.Value.ToString() + "руб.\n";
             }
             return ans;
         }

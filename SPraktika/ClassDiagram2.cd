@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="SPraktika.EuropeanCentralBank">
-    <Position X="0.75" Y="4" Width="2" />
+    <Position X="0.75" Y="5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAIEAAACgAAAAACAAAA=</HashCode>
       <FileName>EuropeanCentralBank.cs</FileName>
@@ -9,7 +9,7 @@
     <Lollipop Position="1.55" />
   </Class>
   <Class Name="SPraktika.CurrencyData">
-    <Position X="1.75" Y="0.5" Width="3" />
+    <Position X="2.75" Y="0.5" Width="3" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
@@ -21,12 +21,13 @@
       </Struct>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAAAACAABAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CurrencyData.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="SPraktika.CentralBankofRussia">
-    <Position X="3.5" Y="4" Width="2" />
+    <Position X="3.5" Y="5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAIEAAACAAAAAAAAAAA=</HashCode>
       <FileName>CentralBankofRussia.cs</FileName>
@@ -34,15 +35,23 @@
     <Lollipop Position="1.55" />
   </Class>
   <Class Name="SPraktika.MainWindow" Collapsed="true">
-    <Position X="6.5" Y="0.5" Width="1.5" />
+    <Position X="8.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MainWindow.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="SPraktika.YahooFinance" Collapsed="true">
+    <Position X="6.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAIEAAACAAAAAAAAAAA=</HashCode>
+      <FileName>YahooFinance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Interface Name="SPraktika.IXmlPage" Collapsed="true">
-    <Position X="6.5" Y="1.75" Width="1.5" />
+    <Position X="8.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAEAAACAAAAAAAAAAA=</HashCode>
       <FileName>IXmlPage.cs</FileName>

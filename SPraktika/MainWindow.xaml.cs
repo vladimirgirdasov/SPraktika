@@ -20,21 +20,32 @@ namespace SPraktika
     /// </summary>
     public partial class MainWindow : Window
     {
+        private delegate void ReadSourceDlg(HashSet<string> abc);
+
         public MainWindow()
         {
             InitializeComponent();
             EuropeanCentralBank ecb = new EuropeanCentralBank();
-            ecb.Read();
-            tbConsole.Text = ecb.Show();
-            tbConsole.Text += "==============\n";
             CentralBankofRussia cbr = new CentralBankofRussia();
-            cbr.Read();
-            tbConsole.Text += cbr.Show();
-            tbConsole.Text += "==============\n";
             YahooFinance yf = new YahooFinance();
-            yf.Read();
-            tbConsole.Text += yf.Show();
-            tbConsole.Text += "==============\n";
+            CurrencyData AVG = new CurrencyData();
+
+            ReadSourceDlg ReadSources = new ReadSourceDlg(ecb.Read);
+            ReadSources += cbr.Read;
+            ReadSources += yf.Read;
+            ReadSources(AVG.abc);
+
+            #region Tmp_Out
+
+            tbConsole.Text = ecb.Show();
+            tbConsole2.Text = cbr.Show();
+            tbConsole3.Text = yf.Show();
+            AVG.CalcAverageCurrencyRate(ecb, cbr, yf);
+            tbConsole4.Text = "";
+            foreach (var item in AVG.CurrencyRates)
+                tbConsole4.Text += item.Key + " = " + item.Value.ToString() + "руб.\n";
+
+            #endregion Tmp_Out
         }
     }
 }

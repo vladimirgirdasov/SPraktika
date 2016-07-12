@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SPraktika"
         mc:Ignorable="d"
-        Title="MainWindow" Height="461.846" Width="675.413">
+        Title="MainWindow" Height="461.846" Width="739.559">
     <Grid>
-        <TextBox x:Name="tbConsole" HorizontalAlignment="Left" Height="411" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="592" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" />
+        <TextBox x:Name="tbConsole" HorizontalAlignment="Left" Height="431" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="183" HorizontalScrollBarVisibility="Auto" />
+        <TextBox x:Name="tbConsole2" HorizontalAlignment="Left" Height="431" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="183" HorizontalScrollBarVisibility="Auto" Margin="183,0,0,0" />
+        <TextBox x:Name="tbConsole3" HorizontalAlignment="Left" Height="431" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="183" HorizontalScrollBarVisibility="Auto" Margin="366,0,0,0" />
+        <TextBox x:Name="tbConsole4" HorizontalAlignment="Left" Height="431" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="183" HorizontalScrollBarVisibility="Auto" Margin="549,0,0,0" />
     </Grid>
 </Window>

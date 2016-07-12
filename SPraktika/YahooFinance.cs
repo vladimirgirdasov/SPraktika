@@ -16,12 +16,7 @@ namespace SPraktika
             get { return address; }
         }
 
-        public YahooFinance()
-        {
-            CurrencyRates = new Dictionary<string, double>();
-        }
-
-        public void Read()
+        public void Read(HashSet<string> ABC)
         {
             XDocument xdoc = XDocument.Load(new WebClient().OpenRead(this.Address));
 
@@ -46,6 +41,9 @@ namespace SPraktika
             CurrencyRates.Keys.CopyTo(tmp, 0);
             foreach (var item in tmp)
                 CurrencyRates[item] = koef / CurrencyRates[item];
+            //add 2 abc
+            foreach (var item in CurrencyRates)
+                ABC.Add(item.Key);
         }
 
         public string Show()
@@ -53,7 +51,7 @@ namespace SPraktika
             string ans = "";
             foreach (var item in CurrencyRates)
             {
-                ans += item.Key + " = " + item.Value.ToString() + "\n";
+                ans += item.Key + " = " + item.Value.ToString() + "руб.\n";
             }
             return ans;
         }

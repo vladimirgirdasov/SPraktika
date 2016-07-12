@@ -1,10 +1,12 @@
-﻿namespace SPraktika
+﻿using System.Collections.Generic;
+
+namespace SPraktika
 {
     internal interface IXmlPage
     {
         string Address { get; }
 
-        void Read();
+        void Read(HashSet<string> ABC);
 
         string Show();
     }

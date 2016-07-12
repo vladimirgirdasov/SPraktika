@@ -10,23 +10,21 @@ namespace SPraktika
     {
         private string address = "http://www.cbr.ru/scripts/XML_daily.asp";//xml data page URL
 
-        public CentralBankofRussia()
-        {
-            CurrencyRates = new System.Collections.Generic.Dictionary<string, double>();
-        }
-
         public string Address
         {
             get { return address; }
         }
 
-        public void Read()
+        public void Read(HashSet<string> ABC)
         {
             XDocument xdoc = XDocument.Load(new WebClient().OpenRead(this.Address));
 
             IEnumerable<XElement> elements = xdoc.Descendants("Valute");
             foreach (XElement item in elements)
                 CurrencyRates.Add(item.Element("CharCode").Value, Convert.ToDouble(item.Element("Value").Value) / Convert.ToDouble(item.Element("Nominal").Value));
+            //add 2 abc
+            foreach (var item in CurrencyRates)
+                ABC.Add(item.Key);
         }
 
         public string Show()
@@ -34,7 +32,7 @@ namespace SPraktika
             string ans = "";
             foreach (var item in CurrencyRates)
             {
-                ans += item.Key + " = " + item.Value.ToString() + "\n";
+                ans += item.Key + " = " + item.Value.ToString() + "руб.\n";
             }
             return ans;
         }
