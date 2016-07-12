@@ -7,13 +7,11 @@ using System.Xml.Linq;
 
 namespace SPraktika
 {
-    internal class YahooFinance : CurrencyData, IXmlPage
+    internal class YahooFinance : CurrencyData, IWebPage
     {
-        private string address = "http://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=xml";//xml data page URL
-
         public string Address
         {
-            get { return address; }
+            get { return "http://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=xml"; }
         }
 
         public void Read(HashSet<string> ABC)

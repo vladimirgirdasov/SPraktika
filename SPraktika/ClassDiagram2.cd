@@ -50,11 +50,11 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="SPraktika.IXmlPage" Collapsed="true">
+  <Interface Name="SPraktika.IWebPage" Collapsed="true">
     <Position X="8.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAEAAACAAAAAAAAAAA=</HashCode>
-      <FileName>IXmlPage.cs</FileName>
+      <FileName>IWebPage.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

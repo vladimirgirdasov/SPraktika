@@ -28,11 +28,13 @@ namespace SPraktika
             EuropeanCentralBank ecb = new EuropeanCentralBank();
             CentralBankofRussia cbr = new CentralBankofRussia();
             YahooFinance yf = new YahooFinance();
+            BLRFinanceInfo blr = new BLRFinanceInfo();
             CurrencyData AVG = new CurrencyData();
 
             ReadSourceDlg ReadSources = new ReadSourceDlg(ecb.Read);
             ReadSources += cbr.Read;
             ReadSources += yf.Read;
+            ReadSources += blr.Read;
             ReadSources(AVG.abc);
 
             #region Tmp_Out

@@ -6,13 +6,11 @@ using System.Xml.Linq;
 
 namespace SPraktika
 {
-    internal class CentralBankofRussia : CurrencyData, IXmlPage
+    internal class CentralBankofRussia : CurrencyData, IWebPage
     {
-        private string address = "http://www.cbr.ru/scripts/XML_daily.asp";//xml data page URL
-
         public string Address
         {
-            get { return address; }
+            get { return "http://www.cbr.ru/scripts/XML_daily.asp"; }
         }
 
         public void Read(HashSet<string> ABC)

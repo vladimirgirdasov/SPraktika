@@ -7,16 +7,14 @@ using System.Xml.Linq;
 
 namespace SPraktika
 {
-    internal class EuropeanCentralBank : CurrencyData, IXmlPage
+    internal class EuropeanCentralBank : CurrencyData, IWebPage
     {
-        private string address = "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";//xmlns data page URL
-
         private XNamespace ns_gesmes = "http://www.gesmes.org/xml/2002-08-01";//xmlns namespaces
         private XNamespace ns = "http://www.ecb.int/vocabulary/2002-08-01/eurofxref";
 
         public string Address
         {
-            get { return address; }
+            get { return "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"; }
         }
 
         public void Read(HashSet<string> ABC)

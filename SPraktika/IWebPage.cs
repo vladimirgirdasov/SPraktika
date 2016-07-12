@@ -2,7 +2,7 @@
 
 namespace SPraktika
 {
-    internal interface IXmlPage
+    internal interface IWebPage
     {
         string Address { get; }
 
