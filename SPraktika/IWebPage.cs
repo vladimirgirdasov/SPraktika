@@ -6,7 +6,9 @@ namespace SPraktika
     {
         string Address { get; }
 
-        void Read(HashSet<string> ABC);
+        void Read(object ABC);
+
+        bool InReading { get; set; }
 
         string Show();
     }

@@ -12,5 +12,55 @@
         <TextBox x:Name="tbConsole3" HorizontalAlignment="Left" Height="431" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="183" HorizontalScrollBarVisibility="Auto" Margin="366,0,0,0" />
         <TextBox x:Name="tbConsole4" HorizontalAlignment="Left" Height="431" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="183" HorizontalScrollBarVisibility="Auto" Margin="549,0,0,0" />
         <TextBox x:Name="tbConsole5" HorizontalAlignment="Left" Height="431" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="183" HorizontalScrollBarVisibility="Auto" Margin="732,0,0,0" />
+        <Label x:Name="label" Content="ЦБР (XML)" HorizontalAlignment="Left" Margin="123,166,0,0" VerticalAlignment="Top" Width="71" RenderTransformOrigin="0.5,0.5" Background="#FFFFC500">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform Angle="88.185" />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Label x:Name="label_Copy" Content="ЦБ Европы (XML)" HorizontalAlignment="Left" Margin="288,186,0,0" VerticalAlignment="Top" Width="107" RenderTransformOrigin="0.5,0.5" Background="#FFFFC500">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform Angle="88.774" />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Label x:Name="label_Copy1" Content="Yahoo finance (XML)" HorizontalAlignment="Left" Margin="464,179,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,0.5" Background="#FFFFC500">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform Angle="88.109" />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Label x:Name="label_Copy2" Content="Среднее" HorizontalAlignment="Left" Margin="662,161,0,0" VerticalAlignment="Top" Width="87" RenderTransformOrigin="0.5,0.5" Background="#FFFFC500">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform Angle="89.666" />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Label x:Name="label_Copy3" Content="BLRfinance (HTML)" HorizontalAlignment="Left" Margin="834,172,-30,0" VerticalAlignment="Top" Width="111" RenderTransformOrigin="0.5,0.5" Background="#FFFFC500">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform Angle="89.949" />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
     </Grid>
 </Window>

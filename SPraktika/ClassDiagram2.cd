@@ -1,59 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="SPraktika.EuropeanCentralBank">
-    <Position X="0.75" Y="5" Width="2" />
+    <Position X="0.75" Y="3.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAIEAAACgAAAAACAAAA=</HashCode>
+      <HashCode>AAAQAAAAEAAAAAAAAAAAAAAgAAAEAAACgAAAAACAAAA=</HashCode>
       <FileName>EuropeanCentralBank.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="1.55" />
   </Class>
   <Class Name="SPraktika.CurrencyData">
-    <Position X="2.75" Y="0.5" Width="3" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
+    <Position X="4.25" Y="0.5" Width="4.25" />
     <NestedTypes>
-      <Struct Name="SPraktika.CurrencyData.Rating">
+      <Struct Name="SPraktika.CurrencyData.Rating" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>CurrencyData.cs</NewMemberFileName>
         </TypeIdentifier>
       </Struct>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAACAABAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAAAACAABAAAAAAAAgBAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CurrencyData.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="SPraktika.CentralBankofRussia">
-    <Position X="3.5" Y="5" Width="2" />
+    <Position X="3.75" Y="3.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAIEAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAQAAAAEAAAAAAAAAAAAAAgAAAEAAACAAAAAAAAAAA=</HashCode>
       <FileName>CentralBankofRussia.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="1.55" />
   </Class>
   <Class Name="SPraktika.MainWindow" Collapsed="true">
-    <Position X="8.75" Y="0.5" Width="1.5" />
+    <Position X="13" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MainWindow.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="SPraktika.YahooFinance" Collapsed="true">
-    <Position X="6.25" Y="5" Width="1.5" />
+  <Class Name="SPraktika.YahooFinance">
+    <Position X="6.75" Y="3.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAIEAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAQAAAAEAAAAAAAAAAAAAAgAAAEAAACAAAAAAAAAAA=</HashCode>
       <FileName>YahooFinance.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="SPraktika.IWebPage" Collapsed="true">
-    <Position X="8.75" Y="1.75" Width="1.5" />
+  <Class Name="SPraktika.BLRFinanceInfo">
+    <Position X="9.75" Y="3.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAEAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAQAAAAEAAAAAAAAAAAAAAgAAAEAAACAAAAAAAAAAA=</HashCode>
+      <FileName>BLRFinanceInfo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="SPraktika.IWebPage" Collapsed="true">
+    <Position X="13" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAgAAAEAAACAAAAAAAAAAA=</HashCode>
       <FileName>IWebPage.cs</FileName>
     </TypeIdentifier>
   </Interface>

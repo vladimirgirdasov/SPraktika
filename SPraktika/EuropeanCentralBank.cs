@@ -18,8 +18,23 @@ namespace SPraktika
             get { return "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"; }
         }
 
-        public void Read(HashSet<string> ABC)
+        public bool InReading
         {
+            get { return inReading; }
+
+            set { inReading = value; }
+        }
+
+        private bool inReading;
+
+        public EuropeanCentralBank()
+        {
+            InReading = true;// При старте данные не получены
+        }
+
+        public void Read(object ABC)
+        {
+            InReading = true;
             try
             {
                 XDocument xdoc = XDocument.Load(new WebClient().OpenRead(this.Address));
@@ -46,11 +61,15 @@ namespace SPraktika
                 CurrencyRates.Remove("RUB");
                 CurrencyRates.Add("EUR", Convert.ToDouble(koef.First().Rate));
                 //add 2 abc
-                Add_Currenies_to_Global_Dictionary(ABC);
+                Add_Currenies_to_Global_Dictionary((HashSet<string>)ABC);
             }
             catch (Exception e)
             {
                 MessageBox.Show("Target site: " + e.TargetSite.ToString() + "\nMessage: " + e.Message + "\nSource: " + e.Source, "Exception в чтении из " + Address);
+            }
+            finally
+            {
+                InReading = false;
             }
         }
 

@@ -21,7 +21,15 @@ namespace SPraktika
     /// </summary>
     public partial class MainWindow : Window
     {
-        private delegate void ReadSourceDlg(HashSet<string> abc);
+        private void Go(object upperCase)
+        {
+            bool upper = (bool)upperCase;
+            MessageBox.Show((upper ? "HELLO!" : "hello!"));
+        }
+
+        public void fun(object a)
+        {
+        }
 
         public MainWindow()
         {
@@ -32,20 +40,34 @@ namespace SPraktika
             BLRFinanceInfo blr = new BLRFinanceInfo();
             CurrencyData AverageData = new CurrencyData();
 
-            ReadSourceDlg ReadSources = new ReadSourceDlg(blr.Read);
-            ReadSources += cbr.Read;
-            ReadSources += ecb.Read;
-            ReadSources += yf.Read;
-            ReadSources(AverageData.abc);
+            // Т.к. при доступе к веб ресурсу возможны задержки И
+            //Т.к. AngleSharp работает асинхронно, переключясь на этот процесс, вывод начинался раньше чем AS завершал работу
+            // Вытесним его на параллельный поток, и вывод по его готовности
+            Thread ReadBlr = new Thread(blr.Read);
+            ReadBlr.Start(AverageData.abc);
+            Thread ReadECB = new Thread(ecb.Read);
+            ReadECB.Start(AverageData.abc);
+            Thread ReadCBR = new Thread(cbr.Read);
+            ReadCBR.Start(AverageData.abc);
+            Thread ReadYf = new Thread(yf.Read);
+            ReadYf.Start(AverageData.abc);
 
-            tbConsole.Text = ecb.Show();
-            tbConsole2.Text = cbr.Show();
-            tbConsole3.Text = yf.Show();
-            tbConsole5.Text = blr.Show();
-            AverageData.CalcAverageCurrencyRate(ecb, cbr, yf, blr);
-            tbConsole4.Text = "";
-            foreach (var item in AverageData.CurrencyRates)
-                tbConsole4.Text += item.Key + " = " + item.Value.ToString() + "руб.\n";
+            while (true)
+            {
+                Thread.Sleep(250);//от перегрузки потока
+                if (!blr.InReading && !cbr.InReading && !ecb.InReading && !yf.InReading)
+                {
+                    tbConsole.Text = ecb.Show();
+                    tbConsole2.Text = cbr.Show();
+                    tbConsole3.Text = yf.Show();
+                    tbConsole5.Text = blr.Show();
+                    AverageData.CalcAverageCurrencyRate(ecb, cbr, yf, blr);
+                    tbConsole4.Text = "";
+                    foreach (var item in AverageData.CurrencyRates)
+                        tbConsole4.Text += item.Key + " = " + item.Value.ToString() + "руб.\n";
+                    break;
+                }
+            }
         }
     }
 }
