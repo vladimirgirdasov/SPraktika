@@ -5,62 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SPraktika"
         mc:Ignorable="d"
-        Title="MainWindow" Height="461.846" Width="923.113">
+        Title="MainWindow" Height="595.071" Width="923.113">
     <Grid>
-        <TextBox x:Name="tbConsole" HorizontalAlignment="Left" Height="431" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="183" HorizontalScrollBarVisibility="Auto" />
-        <TextBox x:Name="tbConsole2" HorizontalAlignment="Left" Height="431" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="183" HorizontalScrollBarVisibility="Auto" Margin="183,0,0,0" />
-        <TextBox x:Name="tbConsole3" HorizontalAlignment="Left" Height="431" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="183" HorizontalScrollBarVisibility="Auto" Margin="366,0,0,0" />
-        <TextBox x:Name="tbConsole4" HorizontalAlignment="Left" Height="431" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="183" HorizontalScrollBarVisibility="Auto" Margin="549,0,0,0" />
-        <TextBox x:Name="tbConsole5" HorizontalAlignment="Left" Height="431" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="183" HorizontalScrollBarVisibility="Auto" Margin="732,0,0,0" />
-        <Label x:Name="label" Content="ЦБР (XML)" HorizontalAlignment="Left" Margin="123,166,0,0" VerticalAlignment="Top" Width="71" RenderTransformOrigin="0.5,0.5" Background="#FFFFC500">
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform />
-                    <SkewTransform />
-                    <RotateTransform Angle="88.185" />
-                    <TranslateTransform />
-                </TransformGroup>
-            </Label.RenderTransform>
-        </Label>
-        <Label x:Name="label_Copy" Content="ЦБ Европы (XML)" HorizontalAlignment="Left" Margin="288,186,0,0" VerticalAlignment="Top" Width="107" RenderTransformOrigin="0.5,0.5" Background="#FFFFC500">
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform />
-                    <SkewTransform />
-                    <RotateTransform Angle="88.774" />
-                    <TranslateTransform />
-                </TransformGroup>
-            </Label.RenderTransform>
-        </Label>
-        <Label x:Name="label_Copy1" Content="Yahoo finance (XML)" HorizontalAlignment="Left" Margin="464,179,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,0.5" Background="#FFFFC500">
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform />
-                    <SkewTransform />
-                    <RotateTransform Angle="88.109" />
-                    <TranslateTransform />
-                </TransformGroup>
-            </Label.RenderTransform>
-        </Label>
-        <Label x:Name="label_Copy2" Content="Среднее" HorizontalAlignment="Left" Margin="662,161,0,0" VerticalAlignment="Top" Width="87" RenderTransformOrigin="0.5,0.5" Background="#FFFFC500">
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform />
-                    <SkewTransform />
-                    <RotateTransform Angle="89.666" />
-                    <TranslateTransform />
-                </TransformGroup>
-            </Label.RenderTransform>
-        </Label>
-        <Label x:Name="label_Copy3" Content="BLRfinance (HTML)" HorizontalAlignment="Left" Margin="834,172,-30,0" VerticalAlignment="Top" Width="111" RenderTransformOrigin="0.5,0.5" Background="#FFFFC500">
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform />
-                    <SkewTransform />
-                    <RotateTransform Angle="89.949" />
-                    <TranslateTransform />
-                </TransformGroup>
-            </Label.RenderTransform>
-        </Label>
+        <Label x:Name="lUpdateCurrencyInfo" Content="Обновить" HorizontalAlignment="Left" Margin="62,219,0,0" VerticalAlignment="Top" Height="52" Width="145" FontSize="30" FontWeight="ExtraLight" Foreground="#FF707070" />
+        <DataGrid x:Name="dgSingleSource" Margin="0,151,394,0" GridLinesVisibility="Horizontal" SelectionMode="Single" CanUserResizeColumns="False" CanUserReorderColumns="False" FontWeight="Light" HorizontalAlignment="Right" Width="248">
+            <DataGrid.BorderBrush>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveCaptionColorKey}}" />
+            </DataGrid.BorderBrush>
+        </DataGrid>
+        <DataGrid x:Name="dgAverageValues" GridLinesVisibility="Horizontal" SelectionMode="Single" CanUserResizeColumns="False" CanUserReorderColumns="False" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" FontWeight="Light" HorizontalAlignment="Right" Width="248" Margin="0,151,46,0" />
+        <ComboBox x:Name="cbSelectCurrencyResource" Margin="0,129,394,0" Loaded="cbSelectCurrencyResource_Loaded" SelectionChanged="cbSelectCurrencyResource_SelectionChanged" BorderBrush="Black" Foreground="Black" Background="White" FontWeight="ExtraLight" HorizontalAlignment="Right" Width="145" Height="22" VerticalAlignment="Top" />
+        <Label x:Name="label1" Content="Источник:" HorizontalAlignment="Right" Margin="0,120,539,0" Width="103" FontSize="16" FontWeight="ExtraLight" Height="31" VerticalAlignment="Top" />
+        <Label x:Name="label1_Copy" Content="Средние показатели:" Margin="0,120,130,0" FontSize="16" FontWeight="ExtraLight" HorizontalAlignment="Right" Width="164" Height="31" VerticalAlignment="Top" />
+        <Button x:Name="bUpdateCurrencyInfo" Content="Button" HorizontalAlignment="Left" Margin="62,219,0,0" VerticalAlignment="Top" Width="145" Height="52" Click="bUpdateCurrencyInfo_Click" Opacity="0" MouseEnter="bUpdateCurrencyInfo_MouseEnter" MouseLeave="bUpdateCurrencyInfo_MouseLeave" />
+        <Label x:Name="label" Content="================================================================================================================" HorizontalAlignment="Left" Margin="0,98,0,0" VerticalAlignment="Top" Width="915" />
+        <Label x:Name="label2" Content="Тут погода" HorizontalAlignment="Left" Margin="412,45,0,0" VerticalAlignment="Top" />
     </Grid>
 </Window>
