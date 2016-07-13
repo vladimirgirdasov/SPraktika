@@ -21,16 +21,6 @@ namespace SPraktika
     /// </summary>
     public partial class MainWindow : Window
     {
-        private void Go(object upperCase)
-        {
-            bool upper = (bool)upperCase;
-            MessageBox.Show((upper ? "HELLO!" : "hello!"));
-        }
-
-        public void fun(object a)
-        {
-        }
-
         public MainWindow()
         {
             InitializeComponent();
