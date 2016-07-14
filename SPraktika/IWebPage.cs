@@ -6,7 +6,7 @@ namespace SPraktika
     {
         string Address { get; }
 
-        void Read(object ABC);
+        void Read(object ABC = null);
 
         bool InReading { get; set; }
 

@@ -22,11 +22,14 @@ namespace SPraktika
     /// </summary>
     public partial class MainWindow : Window
     {
+        //Валюты
         private EuropeanCentralBank ecb = new EuropeanCentralBank();
         private CentralBankofRussia cbr = new CentralBankofRussia();
         private YahooFinance yf = new YahooFinance();
         private BLRFinanceInfo blr = new BLRFinanceInfo();
         private CurrencyData AverageData = new CurrencyData();
+        //Города(Погода)
+        private YandexCities yaCity = new YandexCities();
 
         private GUI gui = new GUI();
 
@@ -48,6 +51,8 @@ namespace SPraktika
             ReadCBR.Start(AverageData.abc);
             Thread ReadYf = new Thread(yf.Read);
             ReadYf.Start(AverageData.abc);
+
+            //MessageBox.Show("Done", "UpdateCurrencyInfo");
         }
 
         public MainWindow()
@@ -130,6 +135,12 @@ namespace SPraktika
         {
             lUpdateCurrencyInfo.Foreground = System.Windows.Media.Brushes.Gray;
             lUpdateCurrencyInfo.FontWeight = FontWeights.ExtraLight;
+        }
+
+        private void bFindCity_Click(object sender, RoutedEventArgs e)
+        {
+            yaCity = new YandexCities();
+            yaCity.Read(tbFindCity.Text);
         }
     }
 }

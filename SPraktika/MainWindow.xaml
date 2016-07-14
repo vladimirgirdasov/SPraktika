@@ -20,5 +20,7 @@
         <Button x:Name="bUpdateCurrencyInfo" Content="Button" HorizontalAlignment="Left" Margin="62,219,0,0" VerticalAlignment="Top" Width="145" Height="52" Click="bUpdateCurrencyInfo_Click" Opacity="0" MouseEnter="bUpdateCurrencyInfo_MouseEnter" MouseLeave="bUpdateCurrencyInfo_MouseLeave" />
         <Label x:Name="label" Content="================================================================================================================" HorizontalAlignment="Left" Margin="0,98,0,0" VerticalAlignment="Top" Width="915" />
         <Label x:Name="label2" Content="Тут погода" HorizontalAlignment="Left" Margin="412,45,0,0" VerticalAlignment="Top" />
+        <TextBox x:Name="tbFindCity" HorizontalAlignment="Left" Height="23" Margin="21,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" />
+        <Button x:Name="bFindCity" Content="Найти город" HorizontalAlignment="Left" Margin="159,22,0,0" VerticalAlignment="Top" Width="83" Click="bFindCity_Click" />
     </Grid>
 </Window>
