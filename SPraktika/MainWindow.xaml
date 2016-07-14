@@ -11,26 +11,44 @@
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="White" Offset="0" />
                 <GradientStop Color="White" Offset="1" />
-                <GradientStop Color="#FFD6F7FF" Offset="0.199" />
-                <GradientStop Color="White" Offset="0.197" />
-                <GradientStop Color="White" Offset="0.228" />
+                <GradientStop Color="#FF6DD2FD" Offset="0.199" />
+                <GradientStop Color="White" Offset="0.196" />
+                <GradientStop Color="White" Offset="0.23" />
             </LinearGradientBrush>
         </Grid.Background>
-        <Label x:Name="lUpdateCurrencyInfo" Content="Обновить" HorizontalAlignment="Left" Margin="62,219,0,0" VerticalAlignment="Top" Height="52" Width="145" FontSize="30" FontWeight="ExtraLight" Foreground="#FF707070" />
-        <DataGrid x:Name="dgSingleSource" Margin="0,151,394,0" GridLinesVisibility="Horizontal" SelectionMode="Single" CanUserResizeColumns="False" CanUserReorderColumns="False" FontWeight="Light" HorizontalAlignment="Right" Width="248">
+        <Label x:Name="lUpdateCurrencyInfo" Content="Обновить" HorizontalAlignment="Left" Margin="62,219,0,0" VerticalAlignment="Top" Height="52" Width="145" FontSize="30" FontWeight="ExtraLight" Foreground="#FF707070" BorderBrush="#FF41B1E1" BorderThickness="1" />
+        <DataGrid x:Name="dgSingleSource" Margin="0,151,394,0" GridLinesVisibility="Horizontal" SelectionMode="Single" CanUserResizeColumns="False" CanUserReorderColumns="False" FontWeight="Light" HorizontalAlignment="Right" Width="248" BorderThickness="1,0">
             <DataGrid.BorderBrush>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveCaptionColorKey}}" />
             </DataGrid.BorderBrush>
         </DataGrid>
         <DataGrid x:Name="dgAverageValues" GridLinesVisibility="Horizontal" SelectionMode="Single" CanUserResizeColumns="False" CanUserReorderColumns="False" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" FontWeight="Light" HorizontalAlignment="Right" Width="248" Margin="0,151,46,0" />
-        <ComboBox x:Name="cbSelectCurrencyResource" Margin="0,129,394,0" Loaded="cbSelectCurrencyResource_Loaded" SelectionChanged="cbSelectCurrencyResource_SelectionChanged" BorderBrush="Black" Foreground="Black" Background="White" FontWeight="ExtraLight" HorizontalAlignment="Right" Width="145" Height="22" VerticalAlignment="Top" />
+        <ComboBox x:Name="cbSelectCurrencyResource" Margin="0,129,394,0" Loaded="cbSelectCurrencyResource_Loaded" SelectionChanged="cbSelectCurrencyResource_SelectionChanged" BorderBrush="Black" Foreground="Black" Background="White" FontWeight="ExtraLight" HorizontalAlignment="Right" Width="145" Height="22" VerticalAlignment="Top" BorderThickness="0,0,1,0" />
         <Label x:Name="label1" Content="Источник:" HorizontalAlignment="Right" Margin="0,120,539,0" Width="103" FontSize="16" FontWeight="ExtraLight" Height="31" VerticalAlignment="Top" />
         <Label x:Name="label1_Copy" Content="Средние показатели:" Margin="0,120,130,0" FontSize="16" FontWeight="ExtraLight" HorizontalAlignment="Right" Width="164" Height="31" VerticalAlignment="Top" />
-        <Button x:Name="bUpdateCurrencyInfo" Content="Button" HorizontalAlignment="Left" Margin="62,219,0,0" VerticalAlignment="Top" Width="145" Height="52" Click="bUpdateCurrencyInfo_Click" Opacity="0" MouseEnter="bUpdateCurrencyInfo_MouseEnter" MouseLeave="bUpdateCurrencyInfo_MouseLeave" />
+        <Button x:Name="bUpdateCurrencyInfo" Content="Button" HorizontalAlignment="Left" Margin="62,219,0,0" VerticalAlignment="Top" Width="145" Height="52" Click="bUpdateCurrencyInfo_Click" Opacity="0" MouseEnter="bUpdateCurrencyInfo_MouseEnter" MouseLeave="bUpdateCurrencyInfo_MouseLeave" BorderThickness="1" BorderBrush="#FF41B1E1" />
         <Grid x:Name="GridWeather" Height="112" VerticalAlignment="Top">
-            <TextBox x:Name="tbFindCity" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" />
-            <Button x:Name="bFindCity" Content="Найти город" HorizontalAlignment="Left" Margin="144,10,0,0" VerticalAlignment="Top" Width="83" Click="bFindCity_Click" />
-            <Label x:Name="label2" Content="Тут погода" HorizontalAlignment="Left" Margin="408,42,0,0" VerticalAlignment="Top" />
+            <Label x:Name="label8" Content="" HorizontalAlignment="Left" Margin="130,10,0,0" VerticalAlignment="Top" Width="121" Height="23" BorderBrush="#FF41B1E1" BorderThickness="0,1,1,1" />
+            <Label x:Name="lFindCity" Content="Найти город" HorizontalAlignment="Left" Margin="130,0,0,0" VerticalAlignment="Top" Height="49" Width="132" FontSize="20" Foreground="#FF707070" FontWeight="Light" BorderThickness="1" />
+            <TextBox x:Name="tbFindCity" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" SelectionBrush="Black" BorderBrush="#FF41B1E1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Button x:Name="bFindCity" Content="Найти город" HorizontalAlignment="Left" Margin="130,9,0,0" VerticalAlignment="Top" Width="116" Click="bFindCity_Click" Height="24" Opacity="0" MouseEnter="bFindCity_MouseEnter" MouseLeave="bFindCity_MouseLeave" />
+            <Label x:Name="label" Content="В городе" HorizontalAlignment="Left" Margin="20,49,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="lCity" Content="null" HorizontalAlignment="Left" Margin="86,49,0,0" VerticalAlignment="Top" Width="130" FontSize="15" FontWeight="Medium" />
+            <Label x:Name="label3" Content="сейчас" HorizontalAlignment="Left" Margin="20,72,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="lTimeOfDay" Content="null" HorizontalAlignment="Left" Margin="73,72,0,0" VerticalAlignment="Top" Width="85" FontSize="15" FontWeight="Medium" />
+            <Image x:Name="iWeather" HorizontalAlignment="Left" Height="48" Margin="267,20,0,0" VerticalAlignment="Top" Width="48" />
+            <Label x:Name="lTemperature" Content="NaN" HorizontalAlignment="Left" Margin="270,67,0,0" VerticalAlignment="Top" Width="43" FontSize="15" FontWeight="Medium" />
+            <Label x:Name="label2" Content="Скорость ветра:" HorizontalAlignment="Left" Margin="365,27,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="label4" Content="Направление ветра:" HorizontalAlignment="Left" Margin="349,54,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="lWindSpeed" Content="NaN" HorizontalAlignment="Left" Margin="472,27,0,0" VerticalAlignment="Top" Width="60" FontSize="15" />
+            <Label x:Name="lWindDirection" Content="null" HorizontalAlignment="Left" Margin="483,54,0,0" VerticalAlignment="Top" Width="120" FontSize="15" />
+            <Label x:Name="label5" Content="Влажность:" HorizontalAlignment="Left" Margin="630,39,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="label6" Content="Атм. давление:" HorizontalAlignment="Left" Margin="605,9,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="lDampness" Content="NaN" HorizontalAlignment="Left" Margin="706,39,0,0" VerticalAlignment="Top" Width="45" FontSize="15" />
+            <Label x:Name="lPressure" Content="NaN" HorizontalAlignment="Left" Margin="706,9,0,0" VerticalAlignment="Top" Width="110" FontSize="15" />
+            <Label x:Name="label7" Content="Завтра ожидается: " HorizontalAlignment="Left" Margin="603,68,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="lTemperatureTomorrow" Content="NaN" HorizontalAlignment="Left" Margin="724,68,0,0" VerticalAlignment="Top" FontSize="15" />
+            <Label x:Name="label9" Content="Данные погоды предоставляются сервисом Яндекс.Погода" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="8" Margin="14,0,0,64" />
         </Grid>
     </Grid>
 </Window>

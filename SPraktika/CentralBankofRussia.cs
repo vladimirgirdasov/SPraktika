@@ -53,12 +53,7 @@ namespace SPraktika
 
         public string Show()
         {
-            string ans = "";
-            foreach (var item in CurrencyRates)
-            {
-                ans += item.Key + " = " + item.Value.ToString() + "руб.\n";
-            }
-            return ans;
+            throw new NotImplementedException();
         }
     }
 }

@@ -61,8 +61,10 @@
     </ApplicationDefinition>
     <Compile Include="BLRFinanceInfo.cs" />
     <Compile Include="GUI.cs" />
+    <Compile Include="WeatherInfo_.cs" />
     <Compile Include="YandexCities.cs" />
     <Compile Include="YahooFinance.cs" />
+    <Compile Include="YandexWeather.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

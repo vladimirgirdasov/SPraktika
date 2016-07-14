@@ -13,7 +13,10 @@ namespace SPraktika
     partial class YandexCities : IWebPage
     {
         private string city_id;
-        public string city;
+        private string city;
+
+        public string City_id { get { return city_id; } }
+        public string City { get { return city; } }
 
         public YandexCities()
         {
@@ -28,16 +31,13 @@ namespace SPraktika
 
         public bool InReading
         {
-            get { return inReading; }
+            get { throw new NotImplementedException(); }
 
-            set { inReading = value; }
+            set { throw new NotImplementedException(); }
         }
 
-        private bool inReading;
-
-        public void Read(object city)//city - запрашиваемый город
+        public void Read(object city)//city - запрашиваемый город string
         {
-            InReading = true;
             try
             {
                 XDocument xdoc = XDocument.Load(new WebClient().OpenRead(this.Address));
@@ -49,14 +49,14 @@ namespace SPraktika
                               where xe.Value == (string)city
                               select xe.Attribute("region");
                     if (ans.Count() != 0)
-                        id += ans.First();
+                        id += ans.First().Value;
                 }
 
                 if (id == "")
                     MessageBox.Show("Информация по городу не предоставлется или город введен не корректно", "Ошибка");
                 else
                 {
-                    MessageBox.Show("Ок. Город определен");
+                    MessageBox.Show("Ок. Город определен (" + id + ")");
                     this.city = (string)city;
                     city_id = id;
                 }
@@ -64,10 +64,6 @@ namespace SPraktika
             catch (Exception e)
             {
                 MessageBox.Show("Target site: " + e.TargetSite.ToString() + "\nMessage: " + e.Message + "\nSource: " + e.Source, "Exception в чтении из " + Address);
-            }
-            finally
-            {
-                InReading = false;
             }
         }
 

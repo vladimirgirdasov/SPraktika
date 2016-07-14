@@ -20,6 +20,7 @@ namespace SPraktika
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
+
     public partial class MainWindow : Window
     {
         //Валюты
@@ -28,8 +29,9 @@ namespace SPraktika
         private YahooFinance yf = new YahooFinance();
         private BLRFinanceInfo blr = new BLRFinanceInfo();
         private CurrencyData AverageData = new CurrencyData();
-        //Города(Погода)
+        //Погода
         private YandexCities yaCity = new YandexCities();
+        private YandexWeather yaWeather = new YandexWeather();
 
         private GUI gui = new GUI();
 
@@ -128,7 +130,7 @@ namespace SPraktika
 
         private void bUpdateCurrencyInfo_MouseEnter(object sender, MouseEventArgs e)
         {
-            lUpdateCurrencyInfo.Foreground = System.Windows.Media.Brushes.LightSkyBlue;
+            lUpdateCurrencyInfo.Foreground = System.Windows.Media.Brushes.DeepSkyBlue;
             lUpdateCurrencyInfo.FontWeight = FontWeights.Light;
         }
 
@@ -142,6 +144,22 @@ namespace SPraktika
         {
             yaCity = new YandexCities();
             yaCity.Read(tbFindCity.Text);
+            if (yaCity.City != "")
+            {
+                yaWeather = new YandexWeather();
+                yaWeather.Read(yaCity.City_id);
+                gui.Show_YandexWeather(yaWeather.weatherInfo, yaCity.City, lCity, lTimeOfDay, iWeather, lTemperature, lWindSpeed, lWindDirection, lPressure, lDampness, lTemperatureTomorrow);
+            }
+        }
+
+        private void bFindCity_MouseEnter(object sender, MouseEventArgs e)
+        {
+            lFindCity.Foreground = System.Windows.Media.Brushes.DeepSkyBlue;
+        }
+
+        private void bFindCity_MouseLeave(object sender, MouseEventArgs e)
+        {
+            lFindCity.Foreground = System.Windows.Media.Brushes.Gray;
         }
     }
 }
