@@ -7,6 +7,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="595.071" Width="923.113">
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="White" Offset="0" />
+                <GradientStop Color="White" Offset="1" />
+                <GradientStop Color="#FFD6F7FF" Offset="0.199" />
+                <GradientStop Color="White" Offset="0.197" />
+                <GradientStop Color="White" Offset="0.228" />
+            </LinearGradientBrush>
+        </Grid.Background>
         <Label x:Name="lUpdateCurrencyInfo" Content="Обновить" HorizontalAlignment="Left" Margin="62,219,0,0" VerticalAlignment="Top" Height="52" Width="145" FontSize="30" FontWeight="ExtraLight" Foreground="#FF707070" />
         <DataGrid x:Name="dgSingleSource" Margin="0,151,394,0" GridLinesVisibility="Horizontal" SelectionMode="Single" CanUserResizeColumns="False" CanUserReorderColumns="False" FontWeight="Light" HorizontalAlignment="Right" Width="248">
             <DataGrid.BorderBrush>
@@ -18,9 +27,10 @@
         <Label x:Name="label1" Content="Источник:" HorizontalAlignment="Right" Margin="0,120,539,0" Width="103" FontSize="16" FontWeight="ExtraLight" Height="31" VerticalAlignment="Top" />
         <Label x:Name="label1_Copy" Content="Средние показатели:" Margin="0,120,130,0" FontSize="16" FontWeight="ExtraLight" HorizontalAlignment="Right" Width="164" Height="31" VerticalAlignment="Top" />
         <Button x:Name="bUpdateCurrencyInfo" Content="Button" HorizontalAlignment="Left" Margin="62,219,0,0" VerticalAlignment="Top" Width="145" Height="52" Click="bUpdateCurrencyInfo_Click" Opacity="0" MouseEnter="bUpdateCurrencyInfo_MouseEnter" MouseLeave="bUpdateCurrencyInfo_MouseLeave" />
-        <Label x:Name="label" Content="================================================================================================================" HorizontalAlignment="Left" Margin="0,98,0,0" VerticalAlignment="Top" Width="915" />
-        <Label x:Name="label2" Content="Тут погода" HorizontalAlignment="Left" Margin="412,45,0,0" VerticalAlignment="Top" />
-        <TextBox x:Name="tbFindCity" HorizontalAlignment="Left" Height="23" Margin="21,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" />
-        <Button x:Name="bFindCity" Content="Найти город" HorizontalAlignment="Left" Margin="159,22,0,0" VerticalAlignment="Top" Width="83" Click="bFindCity_Click" />
+        <Grid x:Name="GridWeather" Height="112" VerticalAlignment="Top">
+            <TextBox x:Name="tbFindCity" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" />
+            <Button x:Name="bFindCity" Content="Найти город" HorizontalAlignment="Left" Margin="144,10,0,0" VerticalAlignment="Top" Width="83" Click="bFindCity_Click" />
+            <Label x:Name="label2" Content="Тут погода" HorizontalAlignment="Left" Margin="408,42,0,0" VerticalAlignment="Top" />
+        </Grid>
     </Grid>
 </Window>

@@ -69,6 +69,7 @@ namespace SPraktika
             cbSelectCurrencyResource.Items.Add("ЦБ РФ");
             cbSelectCurrencyResource.Items.Add("Yahoo Finance");
             cbSelectCurrencyResource.Items.Add("BLR Finance");
+            cbSelectCurrencyResource.SelectedIndex = 1;
         }
 
         private void cbSelectCurrencyResource_SelectionChanged(object sender, SelectionChangedEventArgs e)
