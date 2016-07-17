@@ -34,6 +34,7 @@ namespace SPraktika
         private YandexWeather yaWeather = new YandexWeather();
         private Gismeteo gisWeather = new Gismeteo();
         private Thread ThreadReadRegion;
+        private Thread ThreadReadGismeteoWeather;
 
         private GUI gui = new GUI();
 
@@ -49,12 +50,16 @@ namespace SPraktika
             // Вытесним его на параллельный поток, и вывод по его готовности
             Thread ReadBlr = new Thread(blr.Read);
             ReadBlr.Start(AverageData.abc);
+            blr.InReading = true;
             Thread ReadECB = new Thread(ecb.Read);
             ReadECB.Start(AverageData.abc);
+            ecb.InReading = true;
             Thread ReadCBR = new Thread(cbr.Read);
             ReadCBR.Start(AverageData.abc);
+            cbr.InReading = true;
             Thread ReadYf = new Thread(yf.Read);
             ReadYf.Start(AverageData.abc);
+            yf.InReading = true;
 
             //MessageBox.Show("Done", "UpdateCurrencyInfo");
         }
@@ -191,15 +196,16 @@ namespace SPraktika
             gisWeather = new Gismeteo();
             ThreadReadRegion = new Thread(gisWeather.ReadRegions_from);
             ThreadReadRegion.Start(gisWeather.Address);
+            gisWeather.InReading = true;
             //
             while (true)
             {
-                Thread.Sleep(250);//от перегрузки потока
                 if (gisWeather.InReading == false)
                 {
                     gui.Fill_Gismeteo_ComboBox_from(gisWeather.RegionHrefs, cbGismeteoRegion);
                     break;
                 }
+                Thread.Sleep(150);//от перегрузки потока
             }
         }
 
@@ -211,23 +217,35 @@ namespace SPraktika
                 var region = cbGismeteoRegion.SelectedItem;
                 if ((gisWeather.RegionHrefs[(string)region]).Contains("daily") == true)
                 {
-                    MessageBox.Show("daily");
                     gisWeather.CitySelected = (string)region;
-                    gisWeather.Read(gisWeather.RegionHrefs[(string)region]);
+                    ThreadReadGismeteoWeather = new Thread(gisWeather.Read);
+                    ThreadReadGismeteoWeather.Start(gisWeather.RegionHrefs[(string)region]);
+                    gisWeather.InReading = true;
+                    //
+                    while (true)//ожидаем прочтения
+                    {
+                        if (gisWeather.InReading == false)
+                        {
+                            gui.Show_GismeteoWeather(gisWeather, gisWeather.CitySelected, lCity1, lCloudness1, iWeather1, lTemperature1, lWindSpeed1, lWindDirection1, lPressure1, lDampness1);
+                            break;
+                        }
+                        Thread.Sleep(150);//от перегрузки потока
+                    }
                 }
                 else
                 {
                     ThreadReadRegion = new Thread(gisWeather.ReadRegions_from);
                     ThreadReadRegion.Start(gisWeather.RegionHrefs[(string)region]);
+                    gisWeather.InReading = true;
                     //
                     while (true)
                     {
-                        Thread.Sleep(150);//от перегрузки потока
                         if (gisWeather.InReading == false)
                         {
                             gui.Fill_Gismeteo_ComboBox_from(gisWeather.RegionHrefs, cbGismeteoRegion);
                             break;
                         }
+                        Thread.Sleep(150);//от перегрузки потока
                     }
                 }
             }

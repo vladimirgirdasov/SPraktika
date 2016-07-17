@@ -59,20 +59,22 @@
             </Button>
         </Grid>
         <Grid x:Name="GridWeatherGismeteo" Height="112" VerticalAlignment="Top" HorizontalAlignment="Left" Width="864">
-            <Label x:Name="label11" Content="В городе" HorizontalAlignment="Left" Margin="20,49,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
-            <Label x:Name="lCity1" Content="null" HorizontalAlignment="Left" Margin="86,49,0,0" VerticalAlignment="Top" Width="130" FontSize="15" FontWeight="Medium" />
-            <Label x:Name="label12" Content="сейчас" HorizontalAlignment="Left" Margin="20,72,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
-            <Label x:Name="lTimeOfDay1" Content="null" HorizontalAlignment="Left" Margin="73,72,0,0" VerticalAlignment="Top" Width="85" FontSize="15" FontWeight="Medium" />
-            <Label x:Name="lTemperature1" Content="NaN" HorizontalAlignment="Left" Margin="270,43,0,0" VerticalAlignment="Top" Width="57" FontSize="18" FontWeight="Medium" Height="36" />
-            <Label x:Name="label13" Content="Скорость ветра:" HorizontalAlignment="Left" Margin="365,27,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
-            <Label x:Name="label14" Content="Направление ветра:" HorizontalAlignment="Left" Margin="349,54,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
-            <Label x:Name="lWindSpeed1" Content="NaN" HorizontalAlignment="Left" Margin="472,27,0,0" VerticalAlignment="Top" Width="60" FontSize="15" />
-            <Label x:Name="lWindDirection1" Content="null" HorizontalAlignment="Left" Margin="483,54,0,0" VerticalAlignment="Top" Width="120" FontSize="15" />
-            <Label x:Name="label15" Content="Влажность:" HorizontalAlignment="Left" Margin="630,39,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
-            <Label x:Name="label16" Content="Атм. давление:" HorizontalAlignment="Left" Margin="605,9,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
-            <Label x:Name="lDampness1" Content="NaN" HorizontalAlignment="Left" Margin="706,39,0,0" VerticalAlignment="Top" Width="45" FontSize="15" />
-            <Label x:Name="lPressure1" Content="NaN" HorizontalAlignment="Left" Margin="706,9,0,0" VerticalAlignment="Top" Width="110" FontSize="15" />
+            <Label x:Name="label11" Content="В" HorizontalAlignment="Left" Margin="37,46,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="lCity1" Content="null" HorizontalAlignment="Left" Margin="60,46,0,0" VerticalAlignment="Top" Width="171" FontSize="15" FontWeight="Medium" />
+            <Label x:Name="label12" Content="сейчас" HorizontalAlignment="Left" Margin="20,67,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="lCloudness1" Content="null" HorizontalAlignment="Left" Margin="73,67,0,0" VerticalAlignment="Top" Width="214" FontSize="15" FontWeight="Medium" />
+            <Label x:Name="lTemperature1" Content="NaN" HorizontalAlignment="Left" Margin="286,60,0,0" VerticalAlignment="Top" Width="73" FontSize="18" FontWeight="Medium" Height="36" />
+            <Label x:Name="label13" Content="Скорость ветра:" HorizontalAlignment="Left" Margin="392,28,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="label14" Content="Направление ветра:" HorizontalAlignment="Left" Margin="366,67,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="lWindSpeed1" Content="NaN" HorizontalAlignment="Left" Margin="512,28,0,0" VerticalAlignment="Top" Width="60" FontSize="15" />
+            <Label x:Name="lWindDirection1" Content="null" HorizontalAlignment="Left" Margin="500,67,0,0" VerticalAlignment="Top" Width="183" FontSize="15" />
+            <Label x:Name="label15" Content="Влажность:" HorizontalAlignment="Left" Margin="688,67,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="label16" Content="Атм. давление:" HorizontalAlignment="Left" Margin="626,28,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="lDampness1" Content="NaN" HorizontalAlignment="Left" Margin="770,67,0,0" VerticalAlignment="Top" Width="45" FontSize="15" />
+            <Label x:Name="lPressure1" Content="NaN" HorizontalAlignment="Left" Margin="733,28,0,0" VerticalAlignment="Top" Width="95" FontSize="15" />
             <ComboBox x:Name="cbGismeteoRegion" HorizontalAlignment="Left" Margin="46,22,0,0" VerticalAlignment="Top" Width="188" Loaded="cbGismeteoRegion_Loaded" SelectionChanged="cbGismeteoRegion_SelectionChanged" />
+            <Button x:Name="bGismeteo_back" Content="&lt;" HorizontalAlignment="Left" Margin="12,22,0,0" VerticalAlignment="Top" Width="29" Height="22" />
+            <Image x:Name="iWeather1" HorizontalAlignment="Left" Height="48" Margin="292,13,0,0" VerticalAlignment="Top" Width="48" />
         </Grid>
     </Grid>
 </Window>

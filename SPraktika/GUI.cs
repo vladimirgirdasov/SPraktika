@@ -59,6 +59,25 @@ namespace SPraktika
             lTemperatureTomorrow.Content = wi.TemperatureTomorrow;
         }
 
+        public void Show_GismeteoWeather(WeatherInfo_ wi, string city, Label City, Label lCloudness, Image iWeather, Label lTemperature, Label lWindSpeed,
+            Label lWindDirection, Label lPressure, Label lDampness)
+        {
+            City.Content = city;
+            lCloudness.Content = wi.cloudness;
+            //image Add
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(wi.ImageOfCurrentWeather, UriKind.Absolute);
+            bitmap.EndInit();
+            iWeather.Source = bitmap;
+            //
+            lTemperature.Content = wi.Temperature;
+            lWindSpeed.Content = wi.WindSpeed;
+            lWindDirection.Content = wi.WindDirection;
+            lPressure.Content = wi.pressure;
+            lDampness.Content = wi.dampness;
+        }
+
         public void Fill_Gismeteo_ComboBox_from(Dictionary<string, string> data, ComboBox cbGismeteo)
         {
             cbGismeteo.Items.Clear();
