@@ -16,5 +16,6 @@ namespace SPraktika
         public string pressure;// Атмосферное давление [мм рт. стлб.]
         public string TemperatureTomorrow;
         public string ImageOfCurrentWeather; //адрес изображения текущей погоды\осадок
+        public string cloudness; //обачлность, текстовое описание (пассмурно, гроза) (гисметео)
     }
 }

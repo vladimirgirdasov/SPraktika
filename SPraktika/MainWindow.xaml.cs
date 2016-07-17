@@ -32,6 +32,8 @@ namespace SPraktika
         //Погода
         private YandexCities yaCity = new YandexCities();
         private YandexWeather yaWeather = new YandexWeather();
+        private Gismeteo gisWeather = new Gismeteo();
+        private Thread ThreadReadRegion;
 
         private GUI gui = new GUI();
 
@@ -63,6 +65,12 @@ namespace SPraktika
             UpdateCurrencyInfo();
             gui.FillDataGrid_2_SingleResource(dgSingleSource, blr, blr);
             gui.FillDataGrid_AverageValues(dgAverageValues, AverageData, ecb, blr, cbr, yf);
+
+            //TEMPORARY
+            bGismeteo.Opacity = 0.25;
+            bYandexWeather.Opacity = 1;
+            GridWeatherYandex.Visibility = Visibility.Hidden;
+            GridWeatherGismeteo.Visibility = Visibility.Visible;
         }
 
         private void cbSelectCurrencyResource_Loaded(object sender, RoutedEventArgs e)
@@ -160,6 +168,70 @@ namespace SPraktika
         private void bFindCity_MouseLeave(object sender, MouseEventArgs e)
         {
             lFindCity.Foreground = System.Windows.Media.Brushes.Gray;
+        }
+
+        private void bGismeteo_Click(object sender, RoutedEventArgs e)
+        {
+            bGismeteo.Opacity = 0.25;
+            bYandexWeather.Opacity = 1;
+            GridWeatherYandex.Visibility = Visibility.Hidden;
+            GridWeatherGismeteo.Visibility = Visibility.Visible;
+        }
+
+        private void bYandexWeather_Click(object sender, RoutedEventArgs e)
+        {
+            bGismeteo.Opacity = 1;
+            bYandexWeather.Opacity = 0.25;
+            GridWeatherYandex.Visibility = Visibility.Visible;
+            GridWeatherGismeteo.Visibility = Visibility.Hidden;
+        }
+
+        private void cbGismeteoRegion_Loaded(object sender, RoutedEventArgs e)
+        {
+            gisWeather = new Gismeteo();
+            ThreadReadRegion = new Thread(gisWeather.ReadRegions_from);
+            ThreadReadRegion.Start(gisWeather.Address);
+            //
+            while (true)
+            {
+                Thread.Sleep(250);//от перегрузки потока
+                if (gisWeather.InReading == false)
+                {
+                    gui.Fill_Gismeteo_ComboBox_from(gisWeather.RegionHrefs, cbGismeteoRegion);
+                    break;
+                }
+            }
+        }
+
+        private void cbGismeteoRegion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (gui.cbGismeteoRegion_InEditing == false)
+            {
+                gui.cbGismeteoRegion_InEditing = true;
+                var region = cbGismeteoRegion.SelectedItem;
+                if ((gisWeather.RegionHrefs[(string)region]).Contains("daily") == true)
+                {
+                    MessageBox.Show("daily");
+                    gisWeather.CitySelected = (string)region;
+                    gisWeather.Read(gisWeather.RegionHrefs[(string)region]);
+                }
+                else
+                {
+                    ThreadReadRegion = new Thread(gisWeather.ReadRegions_from);
+                    ThreadReadRegion.Start(gisWeather.RegionHrefs[(string)region]);
+                    //
+                    while (true)
+                    {
+                        Thread.Sleep(150);//от перегрузки потока
+                        if (gisWeather.InReading == false)
+                        {
+                            gui.Fill_Gismeteo_ComboBox_from(gisWeather.RegionHrefs, cbGismeteoRegion);
+                            break;
+                        }
+                    }
+                }
+            }
+            gui.cbGismeteoRegion_InEditing = false;
         }
     }
 }

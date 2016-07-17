@@ -59,12 +59,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BLRFinanceInfo.cs" />
+    <Compile Include="Currenies\BLRFinanceInfo.cs" />
+    <Compile Include="Weather\Gismeteo.cs" />
     <Compile Include="GUI.cs" />
-    <Compile Include="WeatherInfo_.cs" />
-    <Compile Include="YandexCities.cs" />
-    <Compile Include="YahooFinance.cs" />
-    <Compile Include="YandexWeather.cs" />
+    <Compile Include="Weather\WeatherInfo_.cs" />
+    <Compile Include="Weather\YandexCities.cs" />
+    <Compile Include="Currenies\YahooFinance.cs" />
+    <Compile Include="Weather\YandexWeather.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -73,9 +74,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CentralBankofRussia.cs" />
-    <Compile Include="CurrencyData.cs" />
-    <Compile Include="EuropeanCentralBank.cs" />
+    <Compile Include="Currenies\CentralBankofRussia.cs" />
+    <Compile Include="Currenies\CurrencyData.cs" />
+    <Compile Include="Currenies\EuropeanCentralBank.cs" />
     <Compile Include="IWebPage.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -110,6 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Weather\YaPogoda.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Weather\gismeteo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

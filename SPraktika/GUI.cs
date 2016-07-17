@@ -26,7 +26,6 @@ namespace SPraktika
 
         public void FillDataGrid_AverageValues(DataGrid dg, CurrencyData source, EuropeanCentralBank ecb, BLRFinanceInfo blr, CentralBankofRussia cbr, YahooFinance yf)
         {
-            //source = new CurrencyData();
             while (true)
             {
                 Thread.Sleep(250);//от перегрузки потока
@@ -58,6 +57,20 @@ namespace SPraktika
             lPressure.Content = wi.pressure + " мм рт. ст.";
             lDampness.Content = wi.dampness + "%";
             lTemperatureTomorrow.Content = wi.TemperatureTomorrow;
+        }
+
+        public void Fill_Gismeteo_ComboBox_from(Dictionary<string, string> data, ComboBox cbGismeteo)
+        {
+            cbGismeteo.Items.Clear();
+            foreach (var item in data.Reverse())//reverse по алфавиту
+                cbGismeteo.Items.Add(item.Key);
+        }
+
+        public bool cbGismeteoRegion_InEditing;
+
+        public GUI()
+        {
+            cbGismeteoRegion_InEditing = false;
         }
     }
 }
