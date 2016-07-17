@@ -2,6 +2,7 @@
 using AngleSharp.Dom.Html;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,13 @@ namespace SPraktika
 
         public string BackPagedRegionName;
 
+        public const string ConfigDirectoryDefault = "Gismeteo.conf";
+
+        public void SaveLastCity(string way = ConfigDirectoryDefault)
+        {
+            File.WriteAllText(way, CurrentHref + "|" + CitySelected);
+        }
+
         public Gismeteo()
         {
             RegionHrefs = new Dictionary<string, string>();
@@ -34,6 +42,24 @@ namespace SPraktika
             CitySelected = "";
             BackPageHref = "";
             CurrentHref = Address;
+        }
+
+        public Gismeteo(string WayConfig)
+        {
+            try
+            {
+                var data = File.ReadAllText(Gismeteo.ConfigDirectoryDefault).Split('|');
+
+                RegionHrefs = new Dictionary<string, string>();
+                inReading = true;
+                CitySelected = data[1];
+                BackPageHref = "";
+                CurrentHref = data[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Target site: " + e.TargetSite.ToString() + "\nMessage: " + e.Message + "\nSource: " + e.Source, "Ошибка в чтении Gismeteo.conf");
+            }
         }
 
         public bool IsInRootDir()

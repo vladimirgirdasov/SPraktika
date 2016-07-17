@@ -1,10 +1,8 @@
-﻿using AngleSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 
@@ -18,10 +16,26 @@ namespace SPraktika
         public string City_id { get { return city_id; } }
         public string City { get { return city; } }
 
+        public const string ConfigDirectoryDefault = "YandexWeather.conf";
+
         public YandexCities()
         {
             city = "";
             city_id = "";
+        }
+
+        public YandexCities(string way)
+        {
+            try
+            {
+                var data = File.ReadAllText(YandexCities.ConfigDirectoryDefault).Split('|');
+                city_id = data[0];
+                city = data[1];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Target site: " + e.TargetSite.ToString() + "\nMessage: " + e.Message + "\nSource: " + e.Source, "Ошибка в чтении YandexWeather.conf");
+            }
         }
 
         public string Address
@@ -34,6 +48,11 @@ namespace SPraktika
             get { throw new NotImplementedException(); }
 
             set { throw new NotImplementedException(); }
+        }
+
+        public void SaveLastCity(string way = ConfigDirectoryDefault)
+        {
+            File.WriteAllText(way, City_id + "|" + City);
         }
 
         public void Read(object city)//city - запрашиваемый город string

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SPraktika"
         mc:Ignorable="d"
         Title="MainWindow" Height="595.071" Width="923.113">
-    <Grid>
+    <Grid d:IsLocked="True">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="White" Offset="0" />
@@ -27,7 +27,7 @@
         <Label x:Name="label1" Content="Источник:" HorizontalAlignment="Right" Margin="0,120,539,0" Width="103" FontSize="16" FontWeight="ExtraLight" Height="31" VerticalAlignment="Top" />
         <Label x:Name="label1_Copy" Content="Средние показатели:" Margin="0,120,130,0" FontSize="16" FontWeight="ExtraLight" HorizontalAlignment="Right" Width="164" Height="31" VerticalAlignment="Top" />
         <Button x:Name="bUpdateCurrencyInfo" Content="Button" HorizontalAlignment="Left" Margin="62,219,0,0" VerticalAlignment="Top" Width="145" Height="52" Click="bUpdateCurrencyInfo_Click" Opacity="0" MouseEnter="bUpdateCurrencyInfo_MouseEnter" MouseLeave="bUpdateCurrencyInfo_MouseLeave" BorderThickness="1" BorderBrush="#FF41B1E1" />
-        <Grid x:Name="GridWeatherYandex" Height="112" VerticalAlignment="Top" HorizontalAlignment="Left" Width="864" d:IsHidden="True">
+        <Grid x:Name="GridWeatherYandex" Height="112" VerticalAlignment="Top" HorizontalAlignment="Left" Width="864" d:IsLocked="True" d:IsHidden="True">
             <Label x:Name="label8" Content="" HorizontalAlignment="Left" Margin="130,10,0,0" VerticalAlignment="Top" Width="121" Height="23" BorderBrush="#FF41B1E1" BorderThickness="0,1,1,1" />
             <Label x:Name="lFindCity" Content="Найти город" HorizontalAlignment="Left" Margin="130,0,0,0" VerticalAlignment="Top" Height="49" Width="132" FontSize="20" Foreground="#FF707070" FontWeight="Light" BorderThickness="1" />
             <TextBox x:Name="tbFindCity" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" SelectionBrush="Black" BorderBrush="#FF41B1E1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
@@ -58,11 +58,11 @@
                 <Image x:Name="YaPogoda_png" Source="Weather/YaPogoda.png" Stretch="Fill" Width="46" Height="48" />
             </Button>
         </Grid>
-        <Grid x:Name="GridWeatherGismeteo" Height="112" VerticalAlignment="Top" HorizontalAlignment="Left" Width="864">
-            <Label x:Name="label11" Content="В" HorizontalAlignment="Left" Margin="37,46,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
-            <Label x:Name="lCity1" Content="null" HorizontalAlignment="Left" Margin="60,46,0,0" VerticalAlignment="Top" Width="171" FontSize="15" FontWeight="Medium" />
-            <Label x:Name="label12" Content="сейчас" HorizontalAlignment="Left" Margin="20,67,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
-            <Label x:Name="lCloudness1" Content="null" HorizontalAlignment="Left" Margin="73,67,0,0" VerticalAlignment="Top" Width="214" FontSize="15" FontWeight="Medium" />
+        <Grid x:Name="GridWeatherGismeteo" Height="112" VerticalAlignment="Top" HorizontalAlignment="Left" Width="864" d:IsLocked="True">
+            <Label x:Name="label11" Content="В" HorizontalAlignment="Left" Margin="37,53,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="lCity1" Content="null" HorizontalAlignment="Left" Margin="60,53,0,0" VerticalAlignment="Top" Width="171" FontSize="15" FontWeight="Medium" />
+            <Label x:Name="label12" Content="сейчас" HorizontalAlignment="Left" Margin="20,74,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
+            <Label x:Name="lCloudness1" Content="null" HorizontalAlignment="Left" Margin="73,74,0,0" VerticalAlignment="Top" Width="214" FontSize="15" FontWeight="Medium" />
             <Label x:Name="lTemperature1" Content="NaN" HorizontalAlignment="Left" Margin="286,60,0,0" VerticalAlignment="Top" Width="73" FontSize="18" FontWeight="Medium" Height="36" />
             <Label x:Name="label13" Content="Скорость ветра:" HorizontalAlignment="Left" Margin="392,28,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
             <Label x:Name="label14" Content="Направление ветра:" HorizontalAlignment="Left" Margin="366,67,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
@@ -72,11 +72,19 @@
             <Label x:Name="label16" Content="Атм. давление:" HorizontalAlignment="Left" Margin="626,28,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
             <Label x:Name="lDampness1" Content="NaN" HorizontalAlignment="Left" Margin="770,67,0,0" VerticalAlignment="Top" Width="45" FontSize="15" />
             <Label x:Name="lPressure1" Content="NaN" HorizontalAlignment="Left" Margin="733,28,0,0" VerticalAlignment="Top" Width="95" FontSize="15" />
-            <ComboBox x:Name="cbGismeteoRegion" HorizontalAlignment="Left" Margin="46,22,0,0" VerticalAlignment="Top" Width="188" Loaded="cbGismeteoRegion_Loaded" SelectionChanged="cbGismeteoRegion_SelectionChanged" />
-            <Button x:Name="bGismeteo_back" Content="&lt;" HorizontalAlignment="Left" Margin="12,22,0,0" VerticalAlignment="Top" Width="29" Height="22" Click="bGismeteo_back_Click" />
+            <ComboBox x:Name="cbGismeteoRegion" HorizontalAlignment="Left" Margin="46,22,0,0" VerticalAlignment="Top" Width="188" Loaded="cbGismeteoRegion_Loaded" SelectionChanged="cbGismeteoRegion_SelectionChanged" BorderBrush="#FF41B1E1">
+                <ComboBox.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0" />
+                        <GradientStop Color="White" Offset="1" />
+                    </LinearGradientBrush>
+                </ComboBox.Background>
+            </ComboBox>
+            <Button x:Name="bGismeteo_back" Content="&lt;" HorizontalAlignment="Left" Margin="12,22,0,0" VerticalAlignment="Top" Width="29" Height="22" Click="bGismeteo_back_Click" Background="White" Foreground="Black" BorderBrush="#FF41B1E1" />
             <Image x:Name="iWeather1" HorizontalAlignment="Left" Height="48" Margin="292,13,0,0" VerticalAlignment="Top" Width="48" />
-            <Label x:Name="label10" Content="Тек. регион:" HorizontalAlignment="Left" Margin="6,0,0,0" VerticalAlignment="Top" />
-            <Label x:Name="lCurrentDir" Content="null" HorizontalAlignment="Left" Margin="75,0,0,0" VerticalAlignment="Top" Width="159" />
+            <Label x:Name="label10" Content="Тек. регион:" HorizontalAlignment="Left" Margin="6,0,0,0" VerticalAlignment="Top" Foreground="Black" />
+            <Label x:Name="lCurrentDir" Content="Весь мир" HorizontalAlignment="Left" Margin="75,0,0,0" VerticalAlignment="Top" Width="159" Foreground="#FF41B1E1" />
+            <Label x:Name="label17" Content="Данные погоды предоставляются сервисом Gismeteo.ru" HorizontalAlignment="Left" Margin="15,38,0,0" VerticalAlignment="Top" FontSize="8" />
         </Grid>
     </Grid>
 </Window>

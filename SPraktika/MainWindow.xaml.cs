@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -71,6 +72,33 @@ namespace SPraktika
             UpdateCurrencyInfo();
             gui.FillDataGrid_2_SingleResource(dgSingleSource, blr, blr);
             gui.FillDataGrid_AverageValues(dgAverageValues, AverageData, ecb, blr, cbr, yf);
+
+            if (File.Exists(YandexCities.ConfigDirectoryDefault))
+            {
+                yaCity = new YandexCities(YandexCities.ConfigDirectoryDefault);
+                yaWeather = new YandexWeather();
+                yaWeather.Read(yaCity.City_id);
+                gui.Show_YandexWeather(yaWeather, yaCity.City, lCity, lTimeOfDay, iWeather, lTemperature, lWindSpeed, lWindDirection, lPressure, lDampness, lTemperatureTomorrow);
+            }
+
+            if (File.Exists(Gismeteo.ConfigDirectoryDefault))
+            {
+                gisWeather = new Gismeteo(Gismeteo.ConfigDirectoryDefault);
+
+                ThreadReadGismeteoWeather = new Thread(gisWeather.Read);
+                ThreadReadGismeteoWeather.Start(gisWeather.CurrentHref);
+                gisWeather.InReading = true;
+                //
+                while (true)//ожидаем прочтения
+                {
+                    if (gisWeather.InReading == false)
+                    {
+                        gui.Show_GismeteoWeather(gisWeather, gisWeather.CitySelected, lCity1, lCloudness1, iWeather1, lTemperature1, lWindSpeed1, lWindDirection1, lPressure1, lDampness1);
+                        break;
+                    }
+                    Thread.Sleep(150);//от перегрузки потока
+                }
+            }
 
             //TEMPORARY
             bGismeteo.Opacity = 0.25;
@@ -163,6 +191,8 @@ namespace SPraktika
                 yaWeather = new YandexWeather();
                 yaWeather.Read(yaCity.City_id);
                 gui.Show_YandexWeather(yaWeather, yaCity.City, lCity, lTimeOfDay, iWeather, lTemperature, lWindSpeed, lWindDirection, lPressure, lDampness, lTemperatureTomorrow);
+                //Запишем последний корректной введеный город (id) в conf, как город по умолчанию
+                yaCity.SaveLastCity();
             }
         }
 
@@ -230,6 +260,7 @@ namespace SPraktika
                         if (gisWeather.InReading == false)
                         {
                             gui.Show_GismeteoWeather(gisWeather, gisWeather.CitySelected, lCity1, lCloudness1, iWeather1, lTemperature1, lWindSpeed1, lWindDirection1, lPressure1, lDampness1);
+                            gisWeather.SaveLastCity();//Сохраним последний корректно выбранный регион, как регион по умолчанию
                             break;
                         }
                         Thread.Sleep(150);//от перегрузки потока
