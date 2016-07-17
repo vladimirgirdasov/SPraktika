@@ -162,7 +162,7 @@ namespace SPraktika
             {
                 yaWeather = new YandexWeather();
                 yaWeather.Read(yaCity.City_id);
-                gui.Show_YandexWeather(yaWeather.weatherInfo, yaCity.City, lCity, lTimeOfDay, iWeather, lTemperature, lWindSpeed, lWindDirection, lPressure, lDampness, lTemperatureTomorrow);
+                gui.Show_YandexWeather(yaWeather, yaCity.City, lCity, lTimeOfDay, iWeather, lTemperature, lWindSpeed, lWindDirection, lPressure, lDampness, lTemperatureTomorrow);
             }
         }
 

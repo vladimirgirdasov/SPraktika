@@ -9,15 +9,8 @@ using System.Xml.Linq;
 
 namespace SPraktika
 {
-    class YandexWeather : IWebPage
+    internal class YandexWeather : WeatherInfo_, IWebPage
     {
-        public WeatherInfo_ weatherInfo;
-
-        public YandexWeather()
-        {
-            weatherInfo = new WeatherInfo_();
-        }
-
         public string Address
         {
             get
@@ -34,22 +27,21 @@ namespace SPraktika
 
         public void Read(object city_id)//city_id - YandexCities.city_id (string)
         {
-            weatherInfo = new WeatherInfo_();
             try
             {
                 XDocument xdoc = XDocument.Load(new WebClient().OpenRead(this.Address + city_id));
                 IEnumerable<XElement> elements = xdoc.Descendants("day_part");
 
                 var cur = elements.First();//Информация на текущее время суток (утро/день/вечер/ночь)
-                weatherInfo.TimeOfDay = cur.Attribute("type").Value;
-                weatherInfo.ImageOfCurrentWeather = ((IEnumerable<XElement>)cur.Descendants("image-v3")).First().Value;
-                weatherInfo.WindSpeed = ((IEnumerable<XElement>)cur.Descendants("wind_speed")).First().Value;
-                weatherInfo.WindDirection = ((IEnumerable<XElement>)cur.Descendants("wind_direction")).First().Value; ;
-                weatherInfo.dampness = ((IEnumerable<XElement>)cur.Descendants("dampness")).First().Value;
-                weatherInfo.Temperature = ((IEnumerable<XElement>)cur.Descendants("temperature")).First().Value;
-                weatherInfo.pressure = ((IEnumerable<XElement>)cur.Descendants("pressure")).First().Value;
+                TimeOfDay = cur.Attribute("type").Value;
+                ImageOfCurrentWeather = ((IEnumerable<XElement>)cur.Descendants("image-v3")).First().Value;
+                WindSpeed = ((IEnumerable<XElement>)cur.Descendants("wind_speed")).First().Value;
+                WindDirection = ((IEnumerable<XElement>)cur.Descendants("wind_direction")).First().Value; ;
+                dampness = ((IEnumerable<XElement>)cur.Descendants("dampness")).First().Value;
+                Temperature = ((IEnumerable<XElement>)cur.Descendants("temperature")).First().Value;
+                pressure = ((IEnumerable<XElement>)cur.Descendants("pressure")).First().Value;
                 IEnumerable<XElement> element_tomorrow = xdoc.Descendants("tomorrow");
-                weatherInfo.TemperatureTomorrow = ((IEnumerable<XElement>)element_tomorrow.Descendants("temperature")).Last().Value;
+                TemperatureTomorrow = ((IEnumerable<XElement>)element_tomorrow.Descendants("temperature")).Last().Value;
             }
             catch (Exception e)
             {
