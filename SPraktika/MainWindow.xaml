@@ -73,8 +73,10 @@
             <Label x:Name="lDampness1" Content="NaN" HorizontalAlignment="Left" Margin="770,67,0,0" VerticalAlignment="Top" Width="45" FontSize="15" />
             <Label x:Name="lPressure1" Content="NaN" HorizontalAlignment="Left" Margin="733,28,0,0" VerticalAlignment="Top" Width="95" FontSize="15" />
             <ComboBox x:Name="cbGismeteoRegion" HorizontalAlignment="Left" Margin="46,22,0,0" VerticalAlignment="Top" Width="188" Loaded="cbGismeteoRegion_Loaded" SelectionChanged="cbGismeteoRegion_SelectionChanged" />
-            <Button x:Name="bGismeteo_back" Content="&lt;" HorizontalAlignment="Left" Margin="12,22,0,0" VerticalAlignment="Top" Width="29" Height="22" />
+            <Button x:Name="bGismeteo_back" Content="&lt;" HorizontalAlignment="Left" Margin="12,22,0,0" VerticalAlignment="Top" Width="29" Height="22" Click="bGismeteo_back_Click" />
             <Image x:Name="iWeather1" HorizontalAlignment="Left" Height="48" Margin="292,13,0,0" VerticalAlignment="Top" Width="48" />
+            <Label x:Name="label10" Content="Тек. регион:" HorizontalAlignment="Left" Margin="6,0,0,0" VerticalAlignment="Top" />
+            <Label x:Name="lCurrentDir" Content="null" HorizontalAlignment="Left" Margin="75,0,0,0" VerticalAlignment="Top" Width="159" />
         </Grid>
     </Grid>
 </Window>

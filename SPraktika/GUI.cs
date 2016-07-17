@@ -91,5 +91,15 @@ namespace SPraktika
         {
             cbGismeteoRegion_InEditing = false;
         }
+
+        public void Gismeteo_button_back__Turn(Button button, bool state)//true - on, false - off
+        {
+            button.IsEnabled = state;
+        }
+
+        public void Gismeteo_Change_CurrentDir_Label(Label label, string dir)
+        {
+            label.Content = dir;
+        }
     }
 }

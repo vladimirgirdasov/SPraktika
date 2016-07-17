@@ -21,14 +21,27 @@ namespace SPraktika
 
         public Dictionary<string, string> RegionHrefs;//ключ-Регион, значение- ссылка после клика на регион
 
-        public string prevPageHref;
+        public string BackPageHref;
+
+        public string CurrentHref;
+
+        public string BackPagedRegionName;
 
         public Gismeteo()
         {
             RegionHrefs = new Dictionary<string, string>();
             inReading = true;
             CitySelected = "";
-            prevPageHref = "";
+            BackPageHref = "";
+            CurrentHref = Address;
+        }
+
+        public bool IsInRootDir()
+        {
+            if (CurrentHref == Address)
+                return true;
+            else
+                return false;
         }
 
         public bool InReading
@@ -119,6 +132,8 @@ namespace SPraktika
                     else
                         RegionHrefs.Add(regions[i] + " (аэропорт)", links[i]);
                 }
+                //
+                CurrentHref = (string)Addr;
             }
             catch (Exception e)
             {
@@ -127,6 +142,60 @@ namespace SPraktika
             finally
             {
                 InReading = false;
+            }
+        }
+
+        public async void ExtractBackPageHref()
+        {
+            if (IsInRootDir())
+                MessageBox.Show("Error going back. It's already root dir", "Error");
+            else
+            {
+                if (CurrentHref.Contains("daily"))//если в листе
+                {
+                    //вернемся на страницу с таблицами (не daily), затем оттуда тоже самое, что для табличной
+                    InReading = true;
+                    try
+                    {
+                        var config = Configuration.Default.WithDefaultLoader();
+                        var document = await BrowsingContext.New(config).OpenAsync(CurrentHref);
+                        var cell_Page_with_Tables_href = document.QuerySelector("[class='section higher'] [class='scity'] span a");
+                        string BackPage_with_Tables_href = ((IHtmlAnchorElement)cell_Page_with_Tables_href).Href;
+                        //Получена табличная страница
+                        var document2 = await BrowsingContext.New(config).OpenAsync(BackPage_with_Tables_href);
+                        var cell_prev_hrefs = document2.QuerySelectorAll("[class='section'] [class='h3'] a");
+                        BackPageHref = ((IHtmlAnchorElement)cell_prev_hrefs.Last()).Href;
+                        BackPagedRegionName = cell_prev_hrefs.Last().TextContent;
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Target site: " + e.TargetSite.ToString() + "\nMessage: " + e.Message + "\nSource: " + e.Source, "Ошибка в чтении адреса предыдущей страницы " + Address);
+                    }
+                    finally
+                    {
+                        InReading = false;
+                    }
+                }
+                else//иначе - Промежуточные страницы выбора региона
+                {
+                    InReading = true;
+                    try
+                    {
+                        var config = Configuration.Default.WithDefaultLoader();
+                        var document = await BrowsingContext.New(config).OpenAsync(CurrentHref);
+                        var cell_prev_hrefs = document.QuerySelectorAll("[class='section'] [class='h3'] a");
+                        BackPageHref = ((IHtmlAnchorElement)cell_prev_hrefs.Last()).Href;
+                        BackPagedRegionName = cell_prev_hrefs.Last().TextContent;
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Target site: " + e.TargetSite.ToString() + "\nMessage: " + e.Message + "\nSource: " + e.Source, "Ошибка в чтении адреса предыдущей страницы " + Address);
+                    }
+                    finally
+                    {
+                        InReading = false;
+                    }
+                }
             }
         }
     }
