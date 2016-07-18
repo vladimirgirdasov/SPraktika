@@ -8,16 +8,17 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service_2GetWeather_and_CurrencyRates
+namespace Service_currencies
 {
-    public partial class Service_2GetWeather_and_CurrencyRates : ServiceBase
+    public partial class Service1 : ServiceBase
     {
-        public Service_2GetWeather_and_CurrencyRates()
+        public Service1()
         {
             InitializeComponent();
             CanStop = true;
             CanPauseAndContinue = true;
             AutoLog = true;
+            this.ServiceName = "Service_currencies";
         }
 
         protected override void OnStart(string[] args)

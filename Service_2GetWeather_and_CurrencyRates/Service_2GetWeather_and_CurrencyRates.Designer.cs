@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            // 
+            // Service_2GetWeather_and_CurrencyRates
+            // 
             this.ServiceName = "Service_2GetWeather_and_CurrencyRates";
+
         }
 
         #endregion
