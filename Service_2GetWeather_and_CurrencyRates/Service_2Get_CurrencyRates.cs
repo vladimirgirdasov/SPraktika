@@ -24,9 +24,9 @@ namespace Service_2Get_CurrencyRates
         private static BLRFinanceInfo blr = new BLRFinanceInfo();
         private static CurrencyData AverageData = new CurrencyData();
 
-        private const string LogName = "CurrenciesLog.xml";
-        private static string LogDir = "D:\\CurrencyInfoService\\";
-        private const string ConfigWay = "D:\\CurrencyInfoService\\config.conf";
+        private const string LogName = @"CurrenciesLog.xml";
+        private static string LogDir = @"D:\\CurrencyInfoService\\";
+        private const string ConfigWay = @"D:\\CurrencyInfoService\\config.conf";
 
         private static int TimerInterval = 10 * 60 * 1000;//10 min
 
@@ -89,7 +89,7 @@ namespace Service_2Get_CurrencyRates
         {
             ReadConfig();
             UpdateCurrencyInfo();
-            CurrencyRates_Writer.CurrencyWrite("D:\\" + LogName, ecb, blr, cbr, yf);
+            CurrencyRates_Writer.CurrencyWrite(LogDir + LogName, ecb, blr, cbr, yf);
             SetTimer(TimerInterval);
         }
 
@@ -110,7 +110,7 @@ namespace Service_2Get_CurrencyRates
         private static void TimerCurrencyElapsedAction(Object source, ElapsedEventArgs e)
         {
             UpdateCurrencyInfo();
-            CurrencyRates_Writer.CurrencyWrite("D:\\" + LogName, ecb, blr, cbr, yf);
+            CurrencyRates_Writer.CurrencyWrite(LogDir + LogName, ecb, blr, cbr, yf);
         }
     }
 }

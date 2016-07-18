@@ -20,8 +20,35 @@ namespace ConsoleServiceTest
         private static BLRFinanceInfo blr = new BLRFinanceInfo();
         private static CurrencyData AverageData = new CurrencyData();
 
-        private const string WayCurrencies = "CurrenciesLog.xml";
-        private const string WayDir = "D:\\TempoDir\\";
+        private const string LogName = @"CurrenciesLog.xml";
+        private static string LogDir = @"D:\\CurrencyInfoService\\";
+        private const string ConfigWay = @"D:\\CurrencyInfoService\\config.conf";
+
+        private static int TimerInterval = 10 * 60 * 1000;//10 min
+
+        private static void ReadConfig()
+        {
+            if (!Directory.Exists(LogDir))
+                Directory.CreateDirectory(LogDir);
+            if (!File.Exists(ConfigWay))
+            {
+                File.WriteAllText(ConfigWay, TimerInterval.ToString() + "|" + LogDir);
+            }
+            else
+            {
+                try
+                {
+                    var data = File.ReadAllText(ConfigWay).Split('|');
+                    TimerInterval = Convert.ToInt32(data[0]);
+                    LogDir = data[1];
+                }
+                catch (Exception e)
+                {
+                    TimerInterval = 10 * 60 * 1000;
+                    LogDir = "D:\\CurrencyInfoService\\";
+                }
+            }
+        }
 
         public static void UpdateCurrencyInfo()
         {
@@ -49,12 +76,12 @@ namespace ConsoleServiceTest
             Console.WriteLine("Updating Done");
         }
 
-        public static void CurrencyWrite(string way = WayCurrencies)
+        public static void CurrencyWrite(string way)
         {
             DateTime localDate = DateTime.Now;
 
-            if (!Directory.Exists(WayDir))
-                Directory.CreateDirectory(WayDir);
+            if (!Directory.Exists(LogDir))
+                Directory.CreateDirectory(LogDir);
             if (!File.Exists(way))//Если файла нету, создаем
             {
                 XmlTextWriter textWritter = new XmlTextWriter(way, Encoding.UTF8);
@@ -113,9 +140,14 @@ namespace ConsoleServiceTest
 
         private static void Main(string[] args)
         {
+            ReadConfig();
+
+            UpdateCurrencyInfo();
+            CurrencyWrite(LogDir + LogName);
+
             Console.WriteLine("The application started at {0:HH:mm:ss.fff}", DateTime.Now);
 
-            SetTimer(5000);
+            SetTimer(TimerInterval);
 
             Console.ReadLine();
             timerCurrency.Stop();
@@ -138,7 +170,7 @@ namespace ConsoleServiceTest
             Console.WriteLine("The Elapsed event was raised at {0:dd-MM-yyyy, HH:mm:ss}",
                               e.SignalTime);
             UpdateCurrencyInfo();
-            CurrencyWrite(WayDir + WayCurrencies);
+            CurrencyWrite(LogDir + LogName);
         }
     }
 }
