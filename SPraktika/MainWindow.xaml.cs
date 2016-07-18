@@ -63,7 +63,7 @@ namespace SPraktika
             ReadYf.Start(AverageData.abc);
             yf.InReading = true;
 
-            //MessageBox.Show("Done", "UpdateCurrencyInfo");
+            MessageBox.Show("Done", "UpdateCurrencyInfo");
         }
 
         public MainWindow()

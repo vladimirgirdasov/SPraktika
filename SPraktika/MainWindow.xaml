@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SPraktika"
         mc:Ignorable="d"
         Title="MainWindow" Height="595.071" Width="923.113">
-    <Grid d:IsLocked="True">
+    <Grid Margin="1,0,-1,0" d:IsLocked="True">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="White" Offset="0" />
@@ -58,7 +58,7 @@
                 <Image x:Name="YaPogoda_png" Source="Weather/YaPogoda.png" Stretch="Fill" Width="46" Height="48" />
             </Button>
         </Grid>
-        <Grid x:Name="GridWeatherGismeteo" Height="112" VerticalAlignment="Top" HorizontalAlignment="Left" Width="864" d:IsLocked="True">
+        <Grid x:Name="GridWeatherGismeteo" Height="112" VerticalAlignment="Top" HorizontalAlignment="Left" Width="864">
             <Label x:Name="label11" Content="В" HorizontalAlignment="Left" Margin="37,53,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
             <Label x:Name="lCity1" Content="null" HorizontalAlignment="Left" Margin="60,53,0,0" VerticalAlignment="Top" Width="171" FontSize="15" FontWeight="Medium" />
             <Label x:Name="label12" Content="сейчас" HorizontalAlignment="Left" Margin="20,74,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="ExtraLight" />
