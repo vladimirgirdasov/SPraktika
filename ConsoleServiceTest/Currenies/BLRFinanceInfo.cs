@@ -22,7 +22,10 @@ namespace ConsoleServiceTest
             set { inReading = value; }
         }
 
-        public const string NameOfResource = "BLR_Finance";
+        public string NameOfResource
+        {
+            get { return "BLR_Finance"; }
+        }
 
         public BLRFinanceInfo()
         {
@@ -53,7 +56,7 @@ namespace ConsoleServiceTest
             }
             catch (Exception e)
             {
-                //MessageBox.Show("Target site: " + e.TargetSite.ToString() + "\nMessage: " + e.Message + "\nSource: " + e.Source, "Exception в чтении из " + Address);//!!
+                Console.WriteLine("{0} Message: {1}", NameOfResource, e.Message.ToString());//!!
             }
             finally
             {

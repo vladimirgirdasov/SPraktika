@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Xml;
 
 namespace ConsoleServiceTest
 {
     internal class Program
     {
         private static System.Timers.Timer timerCurrency;
+
         private static EuropeanCentralBank ecb = new EuropeanCentralBank();
         private static CentralBankofRussia cbr = new CentralBankofRussia();
         private static YahooFinance yf = new YahooFinance();
@@ -45,35 +48,61 @@ namespace ConsoleServiceTest
             Console.WriteLine("Updating Done");
         }
 
-        public static void CurrencyInfoOut(CurrencyData source, IWebPage page)
+        public static void CurrencyWrite(string way = WayCurrencies)
         {
-            while (true)
-            {
-                Thread.Sleep(150);//от перегрузки потока
-                if (page.InReading == false)
-                {
-                    foreach (var item in source.CurrencyRates)
-                    {
-                        Console.WriteLine("{0} = {1}", item.Key, item.Value);
-                    }
+            DateTime localDate = DateTime.Now;
 
-                    break;
-                }
+            if (!File.Exists(way))//Если файла нету, создаем
+            {
+                XmlTextWriter textWritter = new XmlTextWriter(way, Encoding.UTF8);
+                textWritter.WriteStartDocument();
+                textWritter.WriteStartElement("head");
+                textWritter.WriteEndElement();
+                textWritter.Close();
             }
+
+            XmlDocument document = new XmlDocument();
+            document.Load(way);
+
+            XmlNode element_update = document.CreateElement("update");
+            XmlAttribute attribute_date = document.CreateAttribute("date"); // создаём атрибут
+            attribute_date.Value = localDate.ToString(); // устанавливаем значение атрибута
+            element_update.Attributes.Append(attribute_date);
+            document.DocumentElement.AppendChild(element_update);
+
+            CurrencyInfoOut(document, element_update, ecb, ecb);
+            CurrencyInfoOut(document, element_update, blr, blr);
+            CurrencyInfoOut(document, element_update, cbr, cbr);
+            CurrencyInfoOut(document, element_update, yf, yf);
+
+            document.Save(way);
+            Console.WriteLine("Writing done");
         }
 
-        public static void CurrencyInfoOut(string way, CurrencyData source, IWebPage page)
+        public static void CurrencyInfoOut(XmlDocument document, XmlNode element_update, CurrencyData source, IWebPage page)
         {
             while (true)
             {
-                Thread.Sleep(150);//от перегрузки потока
+                Thread.Sleep(100);//от перегрузки потока
                 if (page.InReading == false)
                 {
+                    XmlNode element_rates_block = document.CreateElement("currency_data");
+                    element_update.AppendChild(element_rates_block); // указываем родителя
+
+                    XmlAttribute attribute_resource = document.CreateAttribute("resource"); // создаём атрибут
+                    attribute_resource.Value = page.NameOfResource; // устанавливаем значение атрибута
+                    element_rates_block.Attributes.Append(attribute_resource); // добавляем атрибут
+
                     foreach (var item in source.CurrencyRates)
                     {
-                        Console.WriteLine("{0} = {1}", item.Key, item.Value);
-                    }
+                        XmlNode element_currency = document.CreateElement("currency"); // даём имя
+                        element_currency.InnerText = item.Value.ToString(); // и значение
+                        element_rates_block.AppendChild(element_currency); // и указываем кому принадлежит
 
+                        XmlAttribute attribute_curr_name = document.CreateAttribute("name"); // создаём атрибут
+                        attribute_curr_name.Value = item.Key; // устанавливаем значение атрибута
+                        element_currency.Attributes.Append(attribute_curr_name); // добавляем атрибут
+                    }
                     break;
                 }
             }
@@ -83,7 +112,7 @@ namespace ConsoleServiceTest
         {
             Console.WriteLine("The application started at {0:HH:mm:ss.fff}", DateTime.Now);
 
-            SetTimer(10000);
+            SetTimer(30000);
 
             Console.ReadLine();
             timerCurrency.Stop();
@@ -106,7 +135,7 @@ namespace ConsoleServiceTest
             Console.WriteLine("The Elapsed event was raised at {0:dd-MM-yyyy, HH:mm:ss}",
                               e.SignalTime);
             UpdateCurrencyInfo();
-            CurrencyInfoOut("1", ecb, ecb);
+            CurrencyWrite();
         }
     }
 }

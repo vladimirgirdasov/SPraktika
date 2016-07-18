@@ -10,6 +10,8 @@ namespace ConsoleServiceTest
 
         bool InReading { get; set; }
 
+        string NameOfResource { get; }
+
         string Show();
     }
 }

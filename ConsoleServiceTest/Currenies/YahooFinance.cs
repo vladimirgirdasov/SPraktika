@@ -24,7 +24,10 @@ namespace ConsoleServiceTest
 
         private bool inReading;
 
-        public const string NameOfResource = "YahooFinance";
+        public string NameOfResource
+        {
+            get { return "YahooFinance"; }
+        }
 
         public YahooFinance()
         {
@@ -64,7 +67,7 @@ namespace ConsoleServiceTest
             }
             catch (Exception e)
             {
-                //MessageBox.Show("Target site: " + e.TargetSite.ToString() + "\nMessage: " + e.Message + "\nSource: " + e.Source, "Exception в чтении из " + Address);//!!
+                Console.WriteLine("{0} Message: {1}", NameOfResource, e.Message.ToString());//!!
             }
             finally
             {
