@@ -38,7 +38,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -56,6 +58,12 @@
     <Compile Include="Currenies\EuropeanCentralBank.cs" />
     <Compile Include="Currenies\YahooFinance.cs" />
     <Compile Include="IWebPage.cs" />
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.cs">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Service_2Get_CurrencyRates.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -70,6 +78,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ProjectInstaller.resx">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Service_2Get_CurrencyRates.resx">
       <DependentUpon>Service_2Get_CurrencyRates.cs</DependentUpon>
     </EmbeddedResource>
