@@ -7,8 +7,8 @@
     <ProjectGuid>{B0F9EA53-289C-4D13-84C9-76496E9281EC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Service_2GetWeather_and_CurrencyRates</RootNamespace>
-    <AssemblyName>Service_2GetWeather_and_CurrencyRates</AssemblyName>
+    <RootNamespace>Service_2Get_CurrencyRates</RootNamespace>
+    <AssemblyName>Service_2Get_CurrencyRates</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -56,11 +56,11 @@
     <Compile Include="Currenies\EuropeanCentralBank.cs" />
     <Compile Include="Currenies\YahooFinance.cs" />
     <Compile Include="IWebPage.cs" />
-    <Compile Include="Service_2GetWeather_and_CurrencyRates.cs">
+    <Compile Include="Service_2Get_CurrencyRates.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Service_2GetWeather_and_CurrencyRates.Designer.cs">
-      <DependentUpon>Service_2GetWeather_and_CurrencyRates.cs</DependentUpon>
+    <Compile Include="Service_2Get_CurrencyRates.Designer.cs">
+      <DependentUpon>Service_2Get_CurrencyRates.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,8 +70,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Service_2GetWeather_and_CurrencyRates.resx">
-      <DependentUpon>Service_2GetWeather_and_CurrencyRates.cs</DependentUpon>
+    <EmbeddedResource Include="Service_2Get_CurrencyRates.resx">
+      <DependentUpon>Service_2Get_CurrencyRates.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Service_2GetWeather_and_CurrencyRates
+namespace Service_2Get_CurrencyRates
 {
     internal class CurrencyRates_Writer : CurrencyData
     {

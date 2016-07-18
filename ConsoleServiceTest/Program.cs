@@ -21,6 +21,7 @@ namespace ConsoleServiceTest
         private static CurrencyData AverageData = new CurrencyData();
 
         private const string WayCurrencies = "CurrenciesLog.xml";
+        private const string WayDir = "D:\\TempoDir\\";
 
         public static void UpdateCurrencyInfo()
         {
@@ -52,6 +53,8 @@ namespace ConsoleServiceTest
         {
             DateTime localDate = DateTime.Now;
 
+            if (!Directory.Exists(WayDir))
+                Directory.CreateDirectory(WayDir);
             if (!File.Exists(way))//Если файла нету, создаем
             {
                 XmlTextWriter textWritter = new XmlTextWriter(way, Encoding.UTF8);
@@ -112,7 +115,7 @@ namespace ConsoleServiceTest
         {
             Console.WriteLine("The application started at {0:HH:mm:ss.fff}", DateTime.Now);
 
-            SetTimer(30000);
+            SetTimer(5000);
 
             Console.ReadLine();
             timerCurrency.Stop();
@@ -135,7 +138,7 @@ namespace ConsoleServiceTest
             Console.WriteLine("The Elapsed event was raised at {0:dd-MM-yyyy, HH:mm:ss}",
                               e.SignalTime);
             UpdateCurrencyInfo();
-            CurrencyWrite();
+            CurrencyWrite(WayDir + WayCurrencies);
         }
     }
 }

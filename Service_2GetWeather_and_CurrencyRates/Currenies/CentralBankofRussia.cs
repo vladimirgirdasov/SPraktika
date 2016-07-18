@@ -5,7 +5,7 @@ using System.Net;
 using System.Windows;
 using System.Xml.Linq;
 
-namespace Service_2GetWeather_and_CurrencyRates
+namespace Service_2Get_CurrencyRates
 {
     internal class CentralBankofRussia : CurrencyData, IWebPage
     {

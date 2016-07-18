@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPraktika", "SPraktika\SPraktika.csproj", "{0B8B616B-8914-42BA-8BB5-F257EEFF9A51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service_2GetWeather_and_CurrencyRates", "Service_2GetWeather_and_CurrencyRates\Service_2GetWeather_and_CurrencyRates.csproj", "{B0F9EA53-289C-4D13-84C9-76496E9281EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service_2Get_CurrencyRates", "Service_2GetWeather_and_CurrencyRates\Service_2Get_CurrencyRates.csproj", "{B0F9EA53-289C-4D13-84C9-76496E9281EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleServiceTest", "ConsoleServiceTest\ConsoleServiceTest.csproj", "{392424D4-351B-46D0-953C-B20FA8D73C00}"
 EndProject

@@ -5,7 +5,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service_2GetWeather_and_CurrencyRates
+namespace Service_2Get_CurrencyRates
 {
     internal static class Program
     {
@@ -17,7 +17,7 @@ namespace Service_2GetWeather_and_CurrencyRates
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new Service_2GetWeather_and_CurrencyRates()
+                new Service_2Get_CurrencyRates()
             };
             ServiceBase.Run(ServicesToRun);
         }

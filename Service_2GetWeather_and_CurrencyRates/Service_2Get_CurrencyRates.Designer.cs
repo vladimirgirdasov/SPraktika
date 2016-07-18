@@ -1,6 +1,6 @@
-﻿namespace Service_2GetWeather_and_CurrencyRates
+﻿namespace Service_2Get_CurrencyRates
 {
-    partial class Service_2GetWeather_and_CurrencyRates
+    partial class Service_2Get_CurrencyRates
     {
         /// <summary> 
         /// Обязательная переменная конструктора.
