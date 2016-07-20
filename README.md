@@ -14,6 +14,7 @@ SParktika
   2)Вход в директорию с службой
   
   3)installutil.exe Service_2Get_CurrencyRates.exe //[Service_2Get_Weather.exe]
+  
   //Удаление installutil.exe /u Service_2Get_CurrencyRates.exe //[Service_2Get_Weather.exe]
   
   Конфиг появится в **D:\CurrencyInfoService** / **D:\WeatherInfoService**, там можно изменить интервал записи свежих данных и изменить директорию записи логов.
