@@ -25,6 +25,11 @@ namespace SPraktika
             set { throw new NotImplementedException(); }
         }
 
+        public List<CurrencyRating> Read()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Read(object city_id)//city_id - YandexCities.city_id (string)
         {
             try
@@ -47,6 +52,11 @@ namespace SPraktika
             {
                 MessageBox.Show("Target site: " + e.TargetSite.ToString() + "\nMessage: " + e.Message + "\nSource: " + e.Source, "Exception в чтении из " + Address);
             }
+        }
+
+        public Task<List<CurrencyRating>> ReadAsync()
+        {
+            throw new NotImplementedException();
         }
 
         public string Show()

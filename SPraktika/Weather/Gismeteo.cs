@@ -224,5 +224,15 @@ namespace SPraktika
                 }
             }
         }
+
+        public List<CurrencyRating> Read()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<CurrencyRating>> ReadAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

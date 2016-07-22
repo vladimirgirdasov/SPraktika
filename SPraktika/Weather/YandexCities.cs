@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 
@@ -87,6 +88,16 @@ namespace SPraktika
         }
 
         public string Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CurrencyRating> Read()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<CurrencyRating>> ReadAsync()
         {
             throw new NotImplementedException();
         }

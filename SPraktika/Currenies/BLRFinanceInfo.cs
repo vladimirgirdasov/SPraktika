@@ -4,17 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace SPraktika
 {
-    internal class BLRFinanceInfo : CurrencyData, IWebPage
+    internal class BLRFinanceInfo : IWebPage
     {
         public string Address
         {
             get { return "http://finance.blr.cc/kurs-valut/ru/"; }
         }
 
+        private bool inReading;
         public bool InReading
         {
             get { return inReading; }
@@ -22,16 +24,10 @@ namespace SPraktika
             set { inReading = value; }
         }
 
-        public BLRFinanceInfo()
-        {
-            InReading = true;// При старте данные не получены
-        }
-
-        private bool inReading;
-
-        public async void Read(object ABC)
+        public async System.Threading.Tasks.Task<List<CurrencyRating>> ReadAsync()
         {
             InReading = true;
+            var ans = new List<CurrencyRating>();
             try
             {
                 var config = Configuration.Default.WithDefaultLoader();
@@ -45,9 +41,9 @@ namespace SPraktika
                 var prices = cells_price.Select(m => m.TextContent.Replace(".", ",").Substring(1));
 
                 for (int i = 0; i < currencies.Count(); i++)
-                    CurrencyRates.Add(currencies.ElementAt(i), Convert.ToDouble(prices.ElementAt(i)));
-                //add 2 abc
-                Add_Currenies_to_Global_Dictionary((HashSet<string>)ABC);
+                {
+                    ans.Add(new CurrencyRating(currencies.ElementAt(i), prices.ElementAt(i)));
+                }
             }
             catch (Exception e)
             {
@@ -57,9 +53,15 @@ namespace SPraktika
             {
                 InReading = false;
             }
+            return ans;
         }
 
-        public string Show()
+        public void Read(object ABC = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CurrencyRating> Read()
         {
             throw new NotImplementedException();
         }

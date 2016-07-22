@@ -59,7 +59,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Currenies\AverageCurrencyData.cs" />
     <Compile Include="Currenies\BLRFinanceInfo.cs" />
+    <Compile Include="Currenies\CurrencyRating.cs" />
     <Compile Include="Weather\Gismeteo.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="Weather\WeatherInfo_.cs" />

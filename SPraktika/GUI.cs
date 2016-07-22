@@ -11,32 +11,9 @@ namespace SPraktika
 {
     internal class GUI
     {
-        public void FillDataGrid_2_SingleResource(DataGrid dg, CurrencyData source, IWebPage page)
+        public void Fill_DataGrid_Currencies(DataGrid dg, List<CurrencyRating> data)
         {
-            while (true)
-            {
-                Thread.Sleep(250);//от перегрузки потока
-                if (page.InReading == false)
-                {
-                    dg.ItemsSource = source.CurrencyRates;
-                    break;
-                }
-            }
-        }
-
-        public void FillDataGrid_AverageValues(DataGrid dg, CurrencyData source, EuropeanCentralBank ecb, BLRFinanceInfo blr, CentralBankofRussia cbr, YahooFinance yf)
-        {
-            while (true)
-            {
-                Thread.Sleep(250);//от перегрузки потока
-
-                if (!ecb.InReading && !blr.InReading && !cbr.InReading && !yf.InReading)
-                {
-                    source.CalcAverageCurrencyRate(ecb, blr, cbr, yf);
-                    dg.ItemsSource = source.CurrencyRates;
-                    break;
-                }
-            }
+            dg.ItemsSource = data.ToDictionary(d => d.cur, d => d.val);
         }
 
         public void Show_YandexWeather(WeatherInfo_ wi, string city, Label City, Label TimeOfDay, Image iWeather, Label lTemperature, Label lWindSpeed,

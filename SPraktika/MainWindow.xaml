@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SPraktika"
         mc:Ignorable="d"
         Title="MainWindow" Height="595.071" Width="923.113">
-    <Grid Margin="1,0,-1,0" d:IsLocked="True">
+    <Grid Margin="1,0,-1,0">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="White" Offset="0" />
@@ -17,7 +17,7 @@
             </LinearGradientBrush>
         </Grid.Background>
         <Label x:Name="lUpdateCurrencyInfo" Content="Обновить" HorizontalAlignment="Left" Margin="62,219,0,0" VerticalAlignment="Top" Height="52" Width="145" FontSize="30" FontWeight="ExtraLight" Foreground="#FF707070" BorderBrush="#FF41B1E1" BorderThickness="1" />
-        <DataGrid x:Name="dgSingleSource" Margin="0,151,394,0" GridLinesVisibility="Horizontal" SelectionMode="Single" CanUserResizeColumns="False" CanUserReorderColumns="False" FontWeight="Light" HorizontalAlignment="Right" Width="248" BorderThickness="1,1,1,0">
+        <DataGrid x:Name="dgSingleSource" Margin="0,151,394,0" AutoGenerateColumns="True" GridLinesVisibility="Horizontal" SelectionMode="Single" CanUserResizeColumns="False" CanUserReorderColumns="False" FontWeight="Light" HorizontalAlignment="Right" Width="248" BorderThickness="1,1,1,0" ItemsSource="{Binding Path=ListTest, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.BorderBrush>
                 <SolidColorBrush Color="#FF41B1E1" />
             </DataGrid.BorderBrush>

@@ -25,11 +25,16 @@ namespace SPraktika
     public partial class MainWindow : Window
     {
         //Валюты
-        private EuropeanCentralBank ecb = new EuropeanCentralBank();
-        private CentralBankofRussia cbr = new CentralBankofRussia();
-        private YahooFinance yf = new YahooFinance();
-        private BLRFinanceInfo blr = new BLRFinanceInfo();
-        private CurrencyData AverageData = new CurrencyData();
+        private List<CurrencyRating> cbrList = new List<CurrencyRating>();
+        private List<CurrencyRating> ecbList = new List<CurrencyRating>();
+        private List<CurrencyRating> yfList = new List<CurrencyRating>();
+        private List<CurrencyRating> blrList = new List<CurrencyRating>();
+        private List<CurrencyRating> avgList = new List<CurrencyRating>();//Среднее
+
+        private EuropeanCentralBank ecbReader = new EuropeanCentralBank();
+        private CentralBankofRussia cbrReader = new CentralBankofRussia();
+        private YahooFinance yfReader = new YahooFinance();
+        private BLRFinanceInfo blrReader = new BLRFinanceInfo();
         //Погода
         private YandexCities yaCity = new YandexCities();
         private YandexWeather yaWeather = new YandexWeather();
@@ -40,39 +45,24 @@ namespace SPraktika
 
         private GUI gui = new GUI();
 
-        public void UpdateCurrencyInfo()
+        public async void UpdateCurrencyInfo()
         {
-            ecb = new EuropeanCentralBank();
-            cbr = new CentralBankofRussia();
-            yf = new YahooFinance();
-            blr = new BLRFinanceInfo();
-            AverageData = new CurrencyData();
-            // Т.к. при доступе к веб ресурсу возможны задержки И
-            //Т.к. AngleSharp работает асинхронно, переключясь на этот процесс, вывод начинался раньше чем AS завершал работу
-            // Вытесним его на параллельный поток, и вывод по его готовности
-            Thread ReadBlr = new Thread(blr.Read);
-            ReadBlr.Start(AverageData.abc);
-            blr.InReading = true;
-            Thread ReadECB = new Thread(ecb.Read);
-            ReadECB.Start(AverageData.abc);
-            ecb.InReading = true;
-            Thread ReadCBR = new Thread(cbr.Read);
-            ReadCBR.Start(AverageData.abc);
-            cbr.InReading = true;
-            Thread ReadYf = new Thread(yf.Read);
-            ReadYf.Start(AverageData.abc);
-            yf.InReading = true;
-
-            MessageBox.Show("Done", "UpdateCurrencyInfo");
+            blrList = await blrReader.ReadAsync();
+            cbrList = cbrReader.Read();
+            ecbList = ecbReader.Read();
+            yfList = yfReader.Read();
+            avgList = AverageCurrencyData.CalcAverageRates(blrList, cbrList, ecbList, yfList);
+            //MessageBox.Show("Done", "UpdateCurrencyInfo");
         }
 
         public MainWindow()
         {
             InitializeComponent();
             UpdateCurrencyInfo();
-            gui.FillDataGrid_2_SingleResource(dgSingleSource, blr, blr);
-            gui.FillDataGrid_AverageValues(dgAverageValues, AverageData, ecb, blr, cbr, yf);
+            gui.Fill_DataGrid_Currencies(dgSingleSource, cbrList);
+            gui.Fill_DataGrid_Currencies(dgAverageValues, avgList);
 
+            /*
             if (File.Exists(YandexCities.ConfigDirectoryDefault))
             {
                 yaCity = new YandexCities(YandexCities.ConfigDirectoryDefault);
@@ -99,6 +89,7 @@ namespace SPraktika
                     Thread.Sleep(150);//от перегрузки потока
                 }
             }
+            */
 
             //TEMPORARY
             bGismeteo.Opacity = 0.25;
@@ -116,22 +107,23 @@ namespace SPraktika
             cbSelectCurrencyResource.SelectedIndex = 1;
         }
 
-        private void cbSelectCurrencyResource_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbSelectCurrencyResource_SelectionChanged(object sender, SelectionChangedEventArgs e)//!!
+
         {
             string name = cbSelectCurrencyResource.SelectedValue.ToString();
             switch (name)
             {
                 case "ЦБ Европы":
-                    gui.FillDataGrid_2_SingleResource(dgSingleSource, ecb, ecb);
+                    gui.Fill_DataGrid_Currencies(dgSingleSource, ecbList);
                     break;
                 case "ЦБ РФ":
-                    gui.FillDataGrid_2_SingleResource(dgSingleSource, cbr, cbr);
+                    gui.Fill_DataGrid_Currencies(dgSingleSource, cbrList);
                     break;
                 case "Yahoo Finance":
-                    gui.FillDataGrid_2_SingleResource(dgSingleSource, yf, yf);
+                    gui.Fill_DataGrid_Currencies(dgSingleSource, yfList);
                     break;
                 case "BLR Finance":
-                    gui.FillDataGrid_2_SingleResource(dgSingleSource, blr, blr);
+                    gui.Fill_DataGrid_Currencies(dgSingleSource, blrList);
                     break;
                 default:
                     MessageBox.Show("cbSelectCurrencyResource_SelectionChanged : Unexpected value", "Error");
@@ -139,35 +131,35 @@ namespace SPraktika
             }
         }
 
-        private void bUpdateCurrencyInfo_Click(object sender, RoutedEventArgs e)
+        private void bUpdateCurrencyInfo_Click(object sender, RoutedEventArgs e)//!!
         {
-            UpdateCurrencyInfo();
-            //Перерисовка таблицы по одному источнику
-            string name;
-            if (cbSelectCurrencyResource.SelectedValue != null)
-                name = cbSelectCurrencyResource.SelectedValue.ToString();
-            else
-                name = "ЦБ РФ";
-            switch (name)
-            {
-                case "ЦБ Европы":
-                    gui.FillDataGrid_2_SingleResource(dgSingleSource, ecb, ecb);
-                    break;
-                case "ЦБ РФ":
-                    gui.FillDataGrid_2_SingleResource(dgSingleSource, cbr, cbr);
-                    break;
-                case "Yahoo Finance":
-                    gui.FillDataGrid_2_SingleResource(dgSingleSource, yf, yf);
-                    break;
-                case "BLR Finance":
-                    gui.FillDataGrid_2_SingleResource(dgSingleSource, blr, blr);
-                    break;
-                default:
-                    MessageBox.Show("cbSelectCurrencyResource_SelectionChanged : Unexpected value", "Error");
-                    break;
-            }
-            //Перерисовка таблцы со средними показателями
-            gui.FillDataGrid_AverageValues(dgAverageValues, AverageData, ecb, blr, cbr, yf);
+            //UpdateCurrencyInfo();
+            ////Перерисовка таблицы по одному источнику
+            //string name;
+            //if (cbSelectCurrencyResource.SelectedValue != null)
+            //    name = cbSelectCurrencyResource.SelectedValue.ToString();
+            //else
+            //    name = "ЦБ РФ";
+            //switch (name)
+            //{
+            //    case "ЦБ Европы":
+            //        gui.FillDataGrid_2_SingleResource(dgSingleSource, ecb, ecb);
+            //        break;
+            //    case "ЦБ РФ":
+            //        gui.FillDataGrid_2_SingleResource(dgSingleSource, cbr, cbr);
+            //        break;
+            //    case "Yahoo Finance":
+            //        gui.FillDataGrid_2_SingleResource(dgSingleSource, yf, yf);
+            //        break;
+            //    case "BLR Finance":
+            //        gui.FillDataGrid_2_SingleResource(dgSingleSource, blr, blr);
+            //        break;
+            //    default:
+            //        MessageBox.Show("cbSelectCurrencyResource_SelectionChanged : Unexpected value", "Error");
+            //        break;
+            //}
+            ////Перерисовка таблцы со средними показателями
+            //gui.FillDataGrid_AverageValues(dgAverageValues, AverageData, ecb, blr, cbr, yf);
         }
 
         private void bUpdateCurrencyInfo_MouseEnter(object sender, MouseEventArgs e)
@@ -241,51 +233,51 @@ namespace SPraktika
             gui.Gismeteo_button_back__Turn(bGismeteo_back, !gisWeather.IsInRootDir());//Если в корне, блокируем кнопку Back
         }
 
-        private void cbGismeteoRegion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbGismeteoRegion_SelectionChanged(object sender, SelectionChangedEventArgs e)//!!
         {
-            if (gui.cbGismeteoRegion_InEditing == false)
-            {
-                gui.cbGismeteoRegion_InEditing = true;
-                var region = cbGismeteoRegion.SelectedItem;
-                gisWeather.CurrentHref = gisWeather.RegionHrefs[(string)region];
-                if ((gisWeather.RegionHrefs[(string)region]).Contains("daily") == true)
-                {
-                    gisWeather.CitySelected = (string)region;
-                    ThreadReadGismeteoWeather = new Thread(gisWeather.Read);
-                    ThreadReadGismeteoWeather.Start(gisWeather.RegionHrefs[(string)region]);
-                    gisWeather.InReading = true;
-                    //
-                    while (true)//ожидаем прочтения
-                    {
-                        if (gisWeather.InReading == false)
-                        {
-                            gui.Show_GismeteoWeather(gisWeather, gisWeather.CitySelected, lCity1, lCloudness1, iWeather1, lTemperature1, lWindSpeed1, lWindDirection1, lPressure1, lDampness1);
-                            gisWeather.SaveLastCity();//Сохраним последний корректно выбранный регион, как регион по умолчанию
-                            break;
-                        }
-                        Thread.Sleep(150);//от перегрузки потока
-                    }
-                }
-                else
-                {
-                    ThreadReadRegion = new Thread(gisWeather.ReadRegions_from);
-                    ThreadReadRegion.Start(gisWeather.RegionHrefs[(string)region]);
-                    gisWeather.InReading = true;
-                    //
-                    while (true)
-                    {
-                        if (gisWeather.InReading == false)
-                        {
-                            gui.Fill_Gismeteo_ComboBox_from(gisWeather.RegionHrefs, cbGismeteoRegion);
-                            break;
-                        }
-                        Thread.Sleep(150);//от перегрузки потока
-                    }
-                }
-                gui.Gismeteo_button_back__Turn(bGismeteo_back, !gisWeather.IsInRootDir());//Если в корне, блокируем кнопку Back
-                gui.Gismeteo_Change_CurrentDir_Label(lCurrentDir, (string)region);
-            }
-            gui.cbGismeteoRegion_InEditing = false;
+            //if (gui.cbGismeteoRegion_InEditing == false)
+            //{
+            //    gui.cbGismeteoRegion_InEditing = true;
+            //    var region = cbGismeteoRegion.SelectedItem;
+            //    gisWeather.CurrentHref = gisWeather.RegionHrefs[(string)region];
+            //    if ((gisWeather.RegionHrefs[(string)region]).Contains("daily") == true)
+            //    {
+            //        gisWeather.CitySelected = (string)region;
+            //        ThreadReadGismeteoWeather = new Thread(gisWeather.Read);
+            //        ThreadReadGismeteoWeather.Start(gisWeather.RegionHrefs[(string)region]);
+            //        gisWeather.InReading = true;
+            //        //
+            //        while (true)//ожидаем прочтения
+            //        {
+            //            if (gisWeather.InReading == false)
+            //            {
+            //                gui.Show_GismeteoWeather(gisWeather, gisWeather.CitySelected, lCity1, lCloudness1, iWeather1, lTemperature1, lWindSpeed1, lWindDirection1, lPressure1, lDampness1);
+            //                gisWeather.SaveLastCity();//Сохраним последний корректно выбранный регион, как регион по умолчанию
+            //                break;
+            //            }
+            //            Thread.Sleep(150);//от перегрузки потока
+            //        }
+            //    }
+            //    else
+            //    {
+            //        ThreadReadRegion = new Thread(gisWeather.ReadRegions_from);
+            //        ThreadReadRegion.Start(gisWeather.RegionHrefs[(string)region]);
+            //        gisWeather.InReading = true;
+            //        //
+            //        while (true)
+            //        {
+            //            if (gisWeather.InReading == false)
+            //            {
+            //                gui.Fill_Gismeteo_ComboBox_from(gisWeather.RegionHrefs, cbGismeteoRegion);
+            //                break;
+            //            }
+            //            Thread.Sleep(150);//от перегрузки потока
+            //        }
+            //    }
+            //    gui.Gismeteo_button_back__Turn(bGismeteo_back, !gisWeather.IsInRootDir());//Если в корне, блокируем кнопку Back
+            //    gui.Gismeteo_Change_CurrentDir_Label(lCurrentDir, (string)region);
+            //}
+            //gui.cbGismeteoRegion_InEditing = false;
         }
 
         private void bGismeteo_back_Click(object sender, RoutedEventArgs e)
