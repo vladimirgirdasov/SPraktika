@@ -1,27 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SPraktika
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
-
     public partial class MainWindow : Window
     {
         //Валюты
@@ -79,7 +64,6 @@ namespace SPraktika
             InitializeComponent();
             Update_and_Show_Currencies(cbrList);
 
-            /*
             if (File.Exists(YandexCities.ConfigDirectoryDefault))
             {
                 yaCity = new YandexCities(YandexCities.ConfigDirectoryDefault);
@@ -92,7 +76,7 @@ namespace SPraktika
             {
                 gisWeather = new Gismeteo(Gismeteo.ConfigDirectoryDefault);
 
-                ThreadReadGismeteoWeather = new Thread(gisWeather.Read);
+                ThreadReadGismeteoWeather = new Thread((ParameterizedThreadStart)gisWeather.Read);
                 ThreadReadGismeteoWeather.Start(gisWeather.CurrentHref);
                 gisWeather.InReading = true;
                 //
@@ -106,7 +90,6 @@ namespace SPraktika
                     Thread.Sleep(150);//от перегрузки потока
                 }
             }
-            */
 
             //TEMPORARY
             bGismeteo.Opacity = 0.25;
@@ -261,49 +244,49 @@ namespace SPraktika
 
         private void cbGismeteoRegion_SelectionChanged(object sender, SelectionChangedEventArgs e)//!!
         {
-            //if (gui.cbGismeteoRegion_InEditing == false)
-            //{
-            //    gui.cbGismeteoRegion_InEditing = true;
-            //    var region = cbGismeteoRegion.SelectedItem;
-            //    gisWeather.CurrentHref = gisWeather.RegionHrefs[(string)region];
-            //    if ((gisWeather.RegionHrefs[(string)region]).Contains("daily") == true)
-            //    {
-            //        gisWeather.CitySelected = (string)region;
-            //        ThreadReadGismeteoWeather = new Thread(gisWeather.Read);
-            //        ThreadReadGismeteoWeather.Start(gisWeather.RegionHrefs[(string)region]);
-            //        gisWeather.InReading = true;
-            //        //
-            //        while (true)//ожидаем прочтения
-            //        {
-            //            if (gisWeather.InReading == false)
-            //            {
-            //                gui.Show_GismeteoWeather(gisWeather, gisWeather.CitySelected, lCity1, lCloudness1, iWeather1, lTemperature1, lWindSpeed1, lWindDirection1, lPressure1, lDampness1);
-            //                gisWeather.SaveLastCity();//Сохраним последний корректно выбранный регион, как регион по умолчанию
-            //                break;
-            //            }
-            //            Thread.Sleep(150);//от перегрузки потока
-            //        }
-            //    }
-            //    else
-            //    {
-            //        ThreadReadRegion = new Thread(gisWeather.ReadRegions_from);
-            //        ThreadReadRegion.Start(gisWeather.RegionHrefs[(string)region]);
-            //        gisWeather.InReading = true;
-            //        //
-            //        while (true)
-            //        {
-            //            if (gisWeather.InReading == false)
-            //            {
-            //                gui.Fill_Gismeteo_ComboBox_from(gisWeather.RegionHrefs, cbGismeteoRegion);
-            //                break;
-            //            }
-            //            Thread.Sleep(150);//от перегрузки потока
-            //        }
-            //    }
-            //    gui.Gismeteo_button_back__Turn(bGismeteo_back, !gisWeather.IsInRootDir());//Если в корне, блокируем кнопку Back
-            //    gui.Gismeteo_Change_CurrentDir_Label(lCurrentDir, (string)region);
-            //}
-            //gui.cbGismeteoRegion_InEditing = false;
+            if (gui.cbGismeteoRegion_InEditing == false)
+            {
+                gui.cbGismeteoRegion_InEditing = true;
+                var region = cbGismeteoRegion.SelectedItem;
+                gisWeather.CurrentHref = gisWeather.RegionHrefs[(string)region];
+                if ((gisWeather.RegionHrefs[(string)region]).Contains("daily") == true)
+                {
+                    gisWeather.CitySelected = (string)region;
+                    ThreadReadGismeteoWeather = new Thread((ParameterizedThreadStart)gisWeather.Read);
+                    ThreadReadGismeteoWeather.Start(gisWeather.RegionHrefs[(string)region]);
+                    gisWeather.InReading = true;
+                    //
+                    while (true)//ожидаем прочтения
+                    {
+                        if (gisWeather.InReading == false)
+                        {
+                            gui.Show_GismeteoWeather(gisWeather, gisWeather.CitySelected, lCity1, lCloudness1, iWeather1, lTemperature1, lWindSpeed1, lWindDirection1, lPressure1, lDampness1);
+                            gisWeather.SaveLastCity();//Сохраним последний корректно выбранный регион, как регион по умолчанию
+                            break;
+                        }
+                        Thread.Sleep(150);//от перегрузки потока
+                    }
+                }
+                else
+                {
+                    ThreadReadRegion = new Thread(gisWeather.ReadRegions_from);
+                    ThreadReadRegion.Start(gisWeather.RegionHrefs[(string)region]);
+                    gisWeather.InReading = true;
+                    //
+                    while (true)
+                    {
+                        if (gisWeather.InReading == false)
+                        {
+                            gui.Fill_Gismeteo_ComboBox_from(gisWeather.RegionHrefs, cbGismeteoRegion);
+                            break;
+                        }
+                        Thread.Sleep(150);//от перегрузки потока
+                    }
+                }
+                gui.Gismeteo_button_back__Turn(bGismeteo_back, !gisWeather.IsInRootDir());//Если в корне, блокируем кнопку Back
+                gui.Gismeteo_Change_CurrentDir_Label(lCurrentDir, (string)region);
+            }
+            gui.cbGismeteoRegion_InEditing = false;
         }
 
         private void bGismeteo_back_Click(object sender, RoutedEventArgs e)

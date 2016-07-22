@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SPraktika"
         mc:Ignorable="d"
         Title="MainWindow" Height="595.071" Width="923.113">
-    <Grid Margin="1,0,-1,0">
+    <Grid Margin="1,0,-1,0" d:IsLocked="True">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="White" Offset="0" />
