@@ -45,6 +45,8 @@ namespace SPraktika
 
         private GUI gui = new GUI();
 
+        public bool done;
+
         public async void UpdateCurrencyInfo()
         {
             blrList = await blrReader.ReadAsync();
@@ -53,14 +55,25 @@ namespace SPraktika
             yfList = yfReader.Read();
             avgList = AverageCurrencyData.CalcAverageRates(blrList, cbrList, ecbList, yfList);
             //MessageBox.Show("Done", "UpdateCurrencyInfo");
+            done = true;
         }
 
         public MainWindow()
         {
             InitializeComponent();
-            UpdateCurrencyInfo();
-            gui.Fill_DataGrid_Currencies(dgSingleSource, cbrList);
-            gui.Fill_DataGrid_Currencies(dgAverageValues, avgList);
+            blrReader.InReading = true;
+            Thread a = new Thread(UpdateCurrencyInfo);
+            a.Start();
+            while (true)
+            {
+                if (done)
+                {
+                    gui.Fill_DataGrid_Currencies(dgSingleSource, cbrList);
+                    gui.Fill_DataGrid_Currencies(dgAverageValues, avgList);
+                    break;
+                }
+                Thread.Sleep(250);
+            }
 
             /*
             if (File.Exists(YandexCities.ConfigDirectoryDefault))

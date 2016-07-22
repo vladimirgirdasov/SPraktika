@@ -77,7 +77,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Currenies\CentralBankofRussia.cs" />
-    <Compile Include="Currenies\CurrencyData.cs" />
     <Compile Include="Currenies\EuropeanCentralBank.cs" />
     <Compile Include="IWebPage.cs" />
     <Compile Include="MainWindow.xaml.cs">
