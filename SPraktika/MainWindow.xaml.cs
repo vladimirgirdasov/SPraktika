@@ -45,7 +45,7 @@ namespace SPraktika
 
         private GUI gui = new GUI();
 
-        public bool done;
+        public bool update_done;
 
         public async void UpdateCurrencyInfo()
         {
@@ -55,25 +55,29 @@ namespace SPraktika
             yfList = yfReader.Read();
             avgList = AverageCurrencyData.CalcAverageRates(blrList, cbrList, ecbList, yfList);
             //MessageBox.Show("Done", "UpdateCurrencyInfo");
-            done = true;
+            update_done = true;
         }
 
-        public MainWindow()
+        public void Update_and_Show_Currencies(List<CurrencyRating> Table1Source)
         {
-            InitializeComponent();
-            blrReader.InReading = true;
-            Thread a = new Thread(UpdateCurrencyInfo);
-            a.Start();
+            update_done = false;
+            new Thread(UpdateCurrencyInfo).Start();
             while (true)
             {
-                if (done)
+                if (update_done)
                 {
-                    gui.Fill_DataGrid_Currencies(dgSingleSource, cbrList);
+                    gui.Fill_DataGrid_Currencies(dgSingleSource, Table1Source);
                     gui.Fill_DataGrid_Currencies(dgAverageValues, avgList);
                     break;
                 }
                 Thread.Sleep(250);
             }
+        }
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            Update_and_Show_Currencies(cbrList);
 
             /*
             if (File.Exists(YandexCities.ConfigDirectoryDefault))
@@ -146,33 +150,42 @@ namespace SPraktika
 
         private void bUpdateCurrencyInfo_Click(object sender, RoutedEventArgs e)//!!
         {
-            //UpdateCurrencyInfo();
-            ////Перерисовка таблицы по одному источнику
-            //string name;
-            //if (cbSelectCurrencyResource.SelectedValue != null)
-            //    name = cbSelectCurrencyResource.SelectedValue.ToString();
-            //else
-            //    name = "ЦБ РФ";
-            //switch (name)
-            //{
-            //    case "ЦБ Европы":
-            //        gui.FillDataGrid_2_SingleResource(dgSingleSource, ecb, ecb);
-            //        break;
-            //    case "ЦБ РФ":
-            //        gui.FillDataGrid_2_SingleResource(dgSingleSource, cbr, cbr);
-            //        break;
-            //    case "Yahoo Finance":
-            //        gui.FillDataGrid_2_SingleResource(dgSingleSource, yf, yf);
-            //        break;
-            //    case "BLR Finance":
-            //        gui.FillDataGrid_2_SingleResource(dgSingleSource, blr, blr);
-            //        break;
-            //    default:
-            //        MessageBox.Show("cbSelectCurrencyResource_SelectionChanged : Unexpected value", "Error");
-            //        break;
-            //}
-            ////Перерисовка таблцы со средними показателями
-            //gui.FillDataGrid_AverageValues(dgAverageValues, AverageData, ecb, blr, cbr, yf);
+            update_done = false;
+            new Thread(UpdateCurrencyInfo).Start();
+            while (true)
+            {
+                if (update_done)
+                {
+                    //Перерисовка таблицы по одному источнику
+                    string name;
+                    if (cbSelectCurrencyResource.SelectedValue != null)
+                        name = cbSelectCurrencyResource.SelectedValue.ToString();
+                    else
+                        name = "ЦБ РФ";
+                    switch (name)
+                    {
+                        case "ЦБ Европы":
+                            gui.Fill_DataGrid_Currencies(dgSingleSource, ecbList);
+                            break;
+                        case "ЦБ РФ":
+                            gui.Fill_DataGrid_Currencies(dgSingleSource, cbrList);
+                            break;
+                        case "Yahoo Finance":
+                            gui.Fill_DataGrid_Currencies(dgSingleSource, yfList);
+                            break;
+                        case "BLR Finance":
+                            gui.Fill_DataGrid_Currencies(dgSingleSource, blrList);
+                            break;
+                        default:
+                            MessageBox.Show("cbSelectCurrencyResource_SelectionChanged : Unexpected value", "Error");
+                            break;
+                    }
+                    //Перерисовка таблцы со средними показателями
+                    gui.Fill_DataGrid_Currencies(dgAverageValues, avgList);
+                    break;
+                }
+                Thread.Sleep(250);
+            }
         }
 
         private void bUpdateCurrencyInfo_MouseEnter(object sender, MouseEventArgs e)
