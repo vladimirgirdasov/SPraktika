@@ -17,6 +17,6 @@ SParktika
   
   //Удаление installutil.exe /u Service_2Get_CurrencyRates.exe //[Service_2Get_Weather.exe]
   
-  Конфиг появится в **D:\CurrencyInfoService** / **D:\WeatherInfoService**, там можно изменить интервал записи свежих данных и изменить директорию записи логов.
+  Конфиг появится в **D:\CurrencyInfoService** / **D:\WeatherInfoService**, там можно изменить интервал записи свежих данных и изменить директорию записи логов, настроить удаление логов по устариванию (По умолчанию хранятся логи последних пяти дней).
 
 
