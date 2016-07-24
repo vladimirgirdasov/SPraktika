@@ -52,11 +52,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CurrencyRates_Writer.cs" />
+    <Compile Include="Currenies\AverageCurrencyData.cs" />
     <Compile Include="Currenies\BLRFinanceInfo.cs" />
     <Compile Include="Currenies\CentralBankofRussia.cs" />
-    <Compile Include="Currenies\CurrencyData.cs" />
+    <Compile Include="Currenies\CurrencyRating.cs" />
     <Compile Include="Currenies\EuropeanCentralBank.cs" />
     <Compile Include="Currenies\YahooFinance.cs" />
+    <Compile Include="DataCurrencySet.cs" />
     <Compile Include="IWebPage.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

@@ -9,13 +9,13 @@ using System.Xml;
 
 namespace Service_2Get_CurrencyRates
 {
-    internal class CurrencyRates_Writer : CurrencyData
+    internal class CurrencyRates_Writer
     {
-        public static void CurrencyWrite(string way, EuropeanCentralBank ecb, BLRFinanceInfo blr, CentralBankofRussia cbr, YahooFinance yf)
+        public static void CurrencyWrite(string way, params DataCurrencySet[] mas)
         {
             DateTime localDate = DateTime.Now;
-
-            if (!File.Exists(way))//Если файла нету, создаем
+            //Если файла нету, создаем
+            if (!File.Exists(way))
             {
                 XmlTextWriter textWritter = new XmlTextWriter(way, Encoding.UTF8);
                 textWritter.WriteStartDocument();
@@ -33,41 +33,33 @@ namespace Service_2Get_CurrencyRates
             element_update.Attributes.Append(attribute_date);
             document.DocumentElement.AppendChild(element_update);
 
-            CurrencyInfoOut(document, element_update, ecb, ecb);
-            CurrencyInfoOut(document, element_update, blr, blr);
-            CurrencyInfoOut(document, element_update, cbr, cbr);
-            CurrencyInfoOut(document, element_update, yf, yf);
+            foreach (var item in mas)
+            {
+                CurrencyInfoOut(document, element_update, item);
+            }
 
             document.Save(way);
             Console.WriteLine("Writing done");
         }
 
-        public static void CurrencyInfoOut(XmlDocument document, XmlNode element_update, CurrencyData source, IWebPage page)
+        public static void CurrencyInfoOut(XmlDocument document, XmlNode element_update, DataCurrencySet dataSet)
         {
-            while (true)
+            XmlNode element_rates_block = document.CreateElement("currency_data");
+            element_update.AppendChild(element_rates_block); // указываем родителя
+
+            XmlAttribute attribute_resource = document.CreateAttribute("resource"); // создаём атрибут
+            attribute_resource.Value = dataSet.SourceName; // устанавливаем значение атрибута
+            element_rates_block.Attributes.Append(attribute_resource); // добавляем атрибут
+
+            foreach (var item in dataSet.data)
             {
-                Thread.Sleep(100);//от перегрузки потока
-                if (page.InReading == false)
-                {
-                    XmlNode element_rates_block = document.CreateElement("currency_data");
-                    element_update.AppendChild(element_rates_block); // указываем родителя
+                XmlNode element_currency = document.CreateElement("currency"); // даём имя
+                element_currency.InnerText = item.val; // и значение
+                element_rates_block.AppendChild(element_currency); // и указываем кому принадлежит
 
-                    XmlAttribute attribute_resource = document.CreateAttribute("resource"); // создаём атрибут
-                    attribute_resource.Value = page.NameOfResource; // устанавливаем значение атрибута
-                    element_rates_block.Attributes.Append(attribute_resource); // добавляем атрибут
-
-                    foreach (var item in source.CurrencyRates)
-                    {
-                        XmlNode element_currency = document.CreateElement("currency"); // даём имя
-                        element_currency.InnerText = item.Value.ToString(); // и значение
-                        element_rates_block.AppendChild(element_currency); // и указываем кому принадлежит
-
-                        XmlAttribute attribute_curr_name = document.CreateAttribute("name"); // создаём атрибут
-                        attribute_curr_name.Value = item.Key; // устанавливаем значение атрибута
-                        element_currency.Attributes.Append(attribute_curr_name); // добавляем атрибут
-                    }
-                    break;
-                }
+                XmlAttribute attribute_curr_name = document.CreateAttribute("name"); // создаём атрибут
+                attribute_curr_name.Value = item.cur; // устанавливаем значение атрибута
+                element_currency.Attributes.Append(attribute_curr_name); // добавляем атрибут
             }
         }
     }

@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 
 namespace Service_2Get_CurrencyRates
 {
-    internal class EuropeanCentralBank : CurrencyData, IWebPage
+    internal class EuropeanCentralBank : IWebPage
     {
         private XNamespace ns_gesmes = "http://www.gesmes.org/xml/2002-08-01";//xmlns namespaces
         private XNamespace ns = "http://www.ecb.int/vocabulary/2002-08-01/eurofxref";
-
         public string Address
         {
             get { return "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"; }
         }
 
+        private bool inReading;
         public bool InReading
         {
             get { return inReading; }
@@ -25,60 +26,49 @@ namespace Service_2Get_CurrencyRates
             set { inReading = value; }
         }
 
-        public string NameOfResource
+        public DataCurrencySet Read()
         {
-            get { return "EuropeanCentralBank"; }
-        }
-
-        private bool inReading;
-
-        public EuropeanCentralBank()
-        {
-            InReading = true;// При старте данные не получены
-        }
-
-        public void Read(object ABC)
-        {
-            InReading = true;
+            var ans = new List<CurrencyRating>();
             try
             {
                 XDocument xdoc = XDocument.Load(new WebClient().OpenRead(this.Address));
 
-                var items = from xe in xdoc.Element(ns_gesmes + "Envelope").Element(ns + "Cube").Element(ns + "Cube").Elements(ns + "Cube")
-                            select new Rating
-                            {
-                                Currency = xe.Attribute("currency").Value,
-                                Rate = xe.Attribute("rate").Value.Replace(".", ",")
-                            };
-
-                //т.к.ecb предоставляет данные относительно ЕВРО, пересчитаем курс на рубли
+                //т.к.ecb предоставляет данные относительно ЕВРО, надо будет пересчитать курс на рубли
                 var koef = from xe in xdoc.Element(ns_gesmes + "Envelope").Element(ns + "Cube").Element(ns + "Cube").Elements(ns + "Cube")
                            where xe.Attribute("currency").Value == "RUB"
-                           select new Rating
-                           {
-                               Currency = xe.Attribute("currency").Value,
-                               Rate = xe.Attribute("rate").Value.Replace(".", ",")
-                           };
+                           select xe.Attribute("rate").Value.Replace(".", ",");
+
+                //Соберём и перекоментируем валюты. Валюту RUB игнорируем. 1рубль=1рубль
+                var items = from xe in xdoc.Element(ns_gesmes + "Envelope").Element(ns + "Cube").Element(ns + "Cube").Elements(ns + "Cube")
+                            where xe.Attribute("currency").Value != "RUB"
+                            select new CurrencyRating
+                            {
+                                cur = xe.Attribute("currency").Value,
+                                val = (Convert.ToDouble(koef.First()) / Convert.ToDouble(xe.Attribute("rate").Value.Replace(".", ","))).ToString()
+                            };
+
                 foreach (var item in items)
                 {
-                    CurrencyRates.Add(item.Currency, Convert.ToDouble(koef.First().Rate) / (Convert.ToDouble(item.Rate)));
+                    ans.Add(item);
                 }
-                CurrencyRates.Remove("RUB");
-                CurrencyRates.Add("EUR", Convert.ToDouble(koef.First().Rate));
-                //add 2 abc
-                Add_Currenies_to_Global_Dictionary((HashSet<string>)ABC);
+
+                //Добавим EUR, им является коэффициент
+                ans.Add(new CurrencyRating("EUR", koef.First()));
             }
             catch (Exception e)
             {
-                Console.WriteLine("{0} Message: {1}", NameOfResource, e.Message.ToString());//!!
+                string[] str = { "EuropeanCentralBank= Target site: " + e.TargetSite.ToString() + "    Message: " + e.Message + "    Source: " + e.Source };
+                File.AppendAllLines("D:\\CurrencyInfoService\\" + "Error.txt", str);
             }
-            finally
-            {
-                InReading = false;
-            }
+            return new DataCurrencySet(ans, "EuropeanCentralBank");
         }
 
-        public string Show()
+        public void Read(object ABC = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DataCurrencySet> ReadAsync()
         {
             throw new NotImplementedException();
         }

@@ -2,16 +2,16 @@
 
 namespace Service_2Get_CurrencyRates
 {
-    internal interface IWebPage
+    public interface IWebPage
     {
         string Address { get; }
 
         void Read(object ABC = null);
 
+        DataCurrencySet Read();
+
+        System.Threading.Tasks.Task<DataCurrencySet> ReadAsync();
+
         bool InReading { get; set; }
-
-        string NameOfResource { get; }
-
-        string Show();
     }
 }

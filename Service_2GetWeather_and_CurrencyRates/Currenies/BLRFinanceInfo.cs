@@ -1,5 +1,4 @@
 ﻿using AngleSharp;
-using AngleSharp.Parser.Html;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,13 +7,14 @@ using System.Windows;
 
 namespace Service_2Get_CurrencyRates
 {
-    internal class BLRFinanceInfo : CurrencyData, IWebPage
+    internal class BLRFinanceInfo : IWebPage
     {
         public string Address
         {
             get { return "http://finance.blr.cc/kurs-valut/ru/"; }
         }
 
+        private bool inReading;
         public bool InReading
         {
             get { return inReading; }
@@ -22,21 +22,10 @@ namespace Service_2Get_CurrencyRates
             set { inReading = value; }
         }
 
-        public string NameOfResource
-        {
-            get { return "BLR_Finance"; }
-        }
-
-        public BLRFinanceInfo()
-        {
-            InReading = true;// При старте данные не получены
-        }
-
-        private bool inReading;
-
-        public async void Read(object ABC)
+        public async System.Threading.Tasks.Task<DataCurrencySet> ReadAsync()
         {
             InReading = true;
+            var ans = new List<CurrencyRating>();
             try
             {
                 var config = Configuration.Default.WithDefaultLoader();
@@ -50,21 +39,28 @@ namespace Service_2Get_CurrencyRates
                 var prices = cells_price.Select(m => m.TextContent.Replace(".", ",").Substring(1));
 
                 for (int i = 0; i < currencies.Count(); i++)
-                    CurrencyRates.Add(currencies.ElementAt(i), Convert.ToDouble(prices.ElementAt(i)));
-                //add 2 abc
-                Add_Currenies_to_Global_Dictionary((HashSet<string>)ABC);
+                {
+                    ans.Add(new CurrencyRating(currencies.ElementAt(i), prices.ElementAt(i)));
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("{0} Message: {1}", NameOfResource, e.Message.ToString());//!!
+                string[] str = { "BLRFinance.Read= Target site: " + e.TargetSite.ToString() + "    Message: " + e.Message + "    Source: " + e.Source };
+                File.AppendAllLines("D:\\CurrencyInfoService\\" + "Error.txt", str);
             }
             finally
             {
                 InReading = false;
             }
+            return new DataCurrencySet(ans, "BLRFinance");
         }
 
-        public string Show()
+        public void Read(object ABC = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DataCurrencySet Read()
         {
             throw new NotImplementedException();
         }
