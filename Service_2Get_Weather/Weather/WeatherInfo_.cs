@@ -17,5 +17,6 @@ namespace Service_2Get_Weather
         public string TemperatureTomorrow;
         public string ImageOfCurrentWeather; //адрес изображения текущей погоды\осадок
         public string cloudness; //обачлность, текстовое описание (пассмурно, гроза) (гисметео)
+        public string City;
     }
 }

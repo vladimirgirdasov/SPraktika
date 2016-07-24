@@ -15,8 +15,6 @@ namespace Service_2Get_Weather
         public const string DefaultHref = @"https://www.gismeteo.ru/city/daily/4508/";
         public string href;
 
-        public string City;
-
         public Gismeteo()
         {
             inReading = true;

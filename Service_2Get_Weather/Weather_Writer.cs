@@ -49,9 +49,14 @@ namespace Service_2Get_Weather
                     XmlNode element_weather_data_block = document.CreateElement("weather_data");
                     element_update.AppendChild(element_weather_data_block); // указываем родителя
 
+                    //Аттрибут "источник"
                     XmlAttribute attribute_resource = document.CreateAttribute("resource"); // создаём атрибут
                     attribute_resource.Value = page.NameOfResource; // устанавливаем значение атрибута
                     element_weather_data_block.Attributes.Append(attribute_resource); // добавляем атрибут
+                    //Аттрибут "город"
+                    XmlAttribute attribute_city = document.CreateAttribute("city");
+                    attribute_city.Value = source.City;
+                    element_weather_data_block.Attributes.Append(attribute_city);
                     //Далее параметры погоды
                     if (source.TimeOfDay.Length == 0)
                         source.TimeOfDay = "NULL";

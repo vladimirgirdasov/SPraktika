@@ -15,8 +15,6 @@ namespace Service_2Get_Weather
         public const string DefaultHref = @"https://export.yandex.ru/bar/reginfo.xml?region=11148";
         public string href;
 
-        public string City;
-
         public YandexWeather()
         {
             href = "";

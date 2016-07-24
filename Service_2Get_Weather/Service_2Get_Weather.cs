@@ -18,30 +18,41 @@ namespace Service_2Get_Weather
         private static System.Timers.Timer timerWeather;
         private static int TimerInterval = 30 * 60 * 1000;//30 min
 
-        private const string LogName = @"WeatherLog.xml";
+        private const string LogPartName = @"WeatherLog__";
+        private const string LogExtension = @".xml";
         private static string LogDir = @"D:\\WeatherInfoService\\";
         private const string ConfigWay = @"D:\\WeatherInfoService\\config.conf";
         private const string ReadmeWay = @"D:\\WeatherInfoService\\ReadMe.txt";
 
+        //Файла старее параметра дней удаляются
+        private static int SaveFile_UpTo_N_days = 5;
+
         private static YandexWeather yaWeather;
         private static Gismeteo gisWeather;
+
+        private static void CreateReadMe()
+        {
+            if (!File.Exists(ReadmeWay))
+            {
+                string[] lines = { @"Погода предоставляется сервисами Яндекс.Погода и gismeteo.ru",
+                    @"Параметры конфига:",
+                    @"1) - Интервал обновления в миллисекундах",
+                    @"2) - В конфиг Яндекс.Погода пишется форма https://export.yandex.ru/bar/reginfo.xml?region={region}",
+                    @"где регион - id нужного региона, который можно взять из https://pogoda.yandex.ru/static/cities.xml",
+                    @"3) - В конфиг gismeteo писать html ссылку на gismeteo.Город",
+                    @"4) - Сервис хранит данные за последние (N) дней"
+                    };
+                File.WriteAllLines(ReadmeWay, lines);
+            }
+        }
 
         private static void ReadConfig()
         {
             if (!Directory.Exists(LogDir))
                 Directory.CreateDirectory(LogDir);
-            if (!File.Exists(ReadmeWay))
-            {
-                string[] lines = { @"Погода предоставляется сервисами Яндекс.Погода и gismeteo.ru",
-                    @"В конфиг gismeteo писать html ссылку на gismeteo.Город",
-                    @"В конфиг Яндекс.Погода пишется форма https://export.yandex.ru/bar/reginfo.xml?region={region}",
-                    @"где регион - id нужного региона, который можно взять из https://pogoda.yandex.ru/static/cities.xml"
-                    };
-                File.WriteAllLines(ReadmeWay, lines);
-            }
             if (!File.Exists(ConfigWay))
             {
-                File.WriteAllText(ConfigWay, TimerInterval.ToString() + "|" + LogDir + "|" + YandexWeather.DefaultHref + "|" + Gismeteo.DefaultHref);
+                File.WriteAllText(ConfigWay, TimerInterval.ToString() + "|" + LogDir + "|" + YandexWeather.DefaultHref + "|" + Gismeteo.DefaultHref + "|" + SaveFile_UpTo_N_days.ToString());
             }
             else
             {
@@ -52,6 +63,7 @@ namespace Service_2Get_Weather
                     LogDir = data[1];
                     yaWeather.href = data[2];
                     gisWeather.href = data[3];
+                    SaveFile_UpTo_N_days = int.Parse(data[4]);
                 }
                 catch (Exception e)
                 {
@@ -59,6 +71,7 @@ namespace Service_2Get_Weather
                     LogDir = @"D:\\WeatherInfoService\\";
                     yaWeather.href = YandexWeather.DefaultHref;
                     gisWeather.href = Gismeteo.DefaultHref;
+                    SaveFile_UpTo_N_days = 5;
 
                     string[] str = { "Target site: " + e.TargetSite.ToString() + "    Message: " + e.Message + "    Source: " + e.Source };
                     File.AppendAllLines("D:\\WeatherInfoService\\" + "Error.txt", str);
@@ -84,8 +97,10 @@ namespace Service_2Get_Weather
             yaWeather = new YandexWeather();
             gisWeather = new Gismeteo();
             ReadConfig();
+            CreateReadMe();
             UpdateWeatherInfo();
-            Weather_Writer.WeatherWrite(LogDir + LogName, yaWeather, gisWeather);
+            Weather_Writer.WeatherWrite(LogDir + LogPartName + DateTime.Today.ToString("d") + LogExtension, yaWeather, gisWeather);
+            Check_Old_Logs_To_Delete();
             SetTimer(TimerInterval);
         }
 
@@ -109,7 +124,8 @@ namespace Service_2Get_Weather
             gisWeather = new Gismeteo();
             ReadConfig();
             UpdateWeatherInfo();
-            Weather_Writer.WeatherWrite(LogDir + LogName, yaWeather, gisWeather);
+            Weather_Writer.WeatherWrite(LogDir + LogPartName + DateTime.Today.ToString("d") + LogExtension, yaWeather, gisWeather);
+            Check_Old_Logs_To_Delete();
         }
 
         public static void UpdateWeatherInfo()
@@ -118,6 +134,33 @@ namespace Service_2Get_Weather
             gisWeather.InReading = true;
             Thread ReadGis = new Thread(gisWeather.Read);
             ReadGis.Start();
+        }
+
+        private static void Check_Old_Logs_To_Delete()
+        {
+            if (SaveFile_UpTo_N_days < 1)
+                return;
+            //Сегодняшний день
+            DateTime CurrentDay = DateTime.Today;
+            //Найдем Все файлы логов
+            string[] all_logs = Directory.GetFiles(LogDir, "WeatherLog__??.??.????.xml", SearchOption.TopDirectoryOnly);
+            //Достанем из их заголовков строку с датой и попытаемся пропарсить на дату
+            DateTime[] all_dates = new DateTime[all_logs.Count()];
+            for (int i = 0; i < all_logs.Count(); i++)
+            {
+                int id = all_logs[i].IndexOf("WeatherLog__");
+                string date_Line = all_logs[i].Substring(id + "WeatherLog__".Length, 10);
+                //Если не парсится - ставим минимальную дату и удалим)))
+                if (!DateTime.TryParseExact(date_Line, "d", null, System.Globalization.DateTimeStyles.None, out all_dates[i]))
+                    all_dates[i] = DateTime.MinValue;
+            }
+            //Удаляем старые файлы:
+            //Если (Дата файла + SaveFile_UpTo_N_days) < CurrentDay => Удаление
+            for (int i = 0; i < all_logs.Count(); i++)
+            {
+                if (all_dates[i].AddDays(SaveFile_UpTo_N_days) < CurrentDay)
+                    File.Delete(all_logs[i]);
+            }
         }
     }
 }
