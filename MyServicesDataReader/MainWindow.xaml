@@ -1,0 +1,35 @@
+﻿<Window x:Class="MyServicesDataReader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyServicesDataReader"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="583.333" Width="837.879">
+    <Grid x:Name="GridMain">
+        <Grid x:Name="GridDirectoryCurrency" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left" Width="400">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FF91C3FF" Offset="1" />
+                    <GradientStop Color="White" />
+                    <GradientStop Color="White" Offset="0.936" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Label x:Name="label" Content="Директория логов курсов валют:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" />
+            <TextBox x:Name="tbFolderCurrencyLogs" HorizontalAlignment="Left" Height="23" Margin="0,26,0,0" TextWrapping="Wrap" Text="пусто" VerticalAlignment="Top" Width="274" />
+            <Button x:Name="bFolderCurrencyLogs" Content="Обзор" HorizontalAlignment="Left" Margin="274,26,0,0" VerticalAlignment="Top" Width="100" Height="23" Background="White" BorderBrush="#FFB6B6B6" Click="bFolderCurrencyLogs_Click" />
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="100" Margin="416,0,0,0" VerticalAlignment="Top" Width="414">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="#FF91C3FF" Offset="1" />
+                    <GradientStop Color="White" Offset="0.929" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Label x:Name="label_Copy" Content="Директория логов погоды:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="177" />
+            <TextBox x:Name="tbFolderWeatherLogs" HorizontalAlignment="Left" Height="23" Margin="0,26,0,0" TextWrapping="Wrap" Text="пусто" VerticalAlignment="Top" Width="274" />
+            <Button x:Name="bFolderWeatherLogs" Content="Обзор" HorizontalAlignment="Left" Margin="274,26,0,0" VerticalAlignment="Top" Width="100" Height="23" Background="White" BorderBrush="#FFB6B6B6" Click="bFolderWeatherLogs_Click" />
+        </Grid>
+    </Grid>
+</Window>
