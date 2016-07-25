@@ -63,5 +63,14 @@ namespace MyServicesDataReader
                 }
             }
         }
+
+        private void dgCurrency_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void bShowCurrency_Click(object sender, RoutedEventArgs e)
+        {
+            dgCurrency.ItemsSource = CurrencyLogsReader.Read(LogsDirectories.Get_CurrencyLogs_Paths());
+        }
     }
 }

@@ -83,5 +83,11 @@ namespace MyServicesDataReader
             else
                 return false;
         }
+
+        public static string[] Get_CurrencyLogs_Paths()
+        {
+            string[] all_logs = Directory.GetFiles(DirectoryCurrency, "CurrenciesLog__??.??.????.xml", SearchOption.TopDirectoryOnly);
+            return all_logs;
+        }
     }
 }

@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:MyServicesDataReader"
         mc:Ignorable="d"
         Title="MainWindow" Height="583.333" Width="837.879">
-    <Grid x:Name="GridMain">
-        <Grid x:Name="GridDirectoryCurrency" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left" Width="400">
+    <Grid x:Name="GridMain" Background="#FFD2F1FF">
+        <Grid x:Name="GridDirectoryCurrency" Height="76" VerticalAlignment="Top" HorizontalAlignment="Left" Width="416">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                    <GradientStop Color="#FF91C3FF" Offset="1" />
+                    <GradientStop Color="#FFD7E9FF" Offset="1" />
                     <GradientStop Color="White" />
                     <GradientStop Color="White" Offset="0.936" />
                 </LinearGradientBrush>
@@ -19,17 +19,37 @@
             <TextBox x:Name="tbFolderCurrencyLogs" HorizontalAlignment="Left" Height="23" Margin="0,26,0,0" TextWrapping="Wrap" Text="пусто" VerticalAlignment="Top" Width="274" />
             <Button x:Name="bFolderCurrencyLogs" Content="Обзор" HorizontalAlignment="Left" Margin="274,26,0,0" VerticalAlignment="Top" Width="100" Height="23" Background="White" BorderBrush="#FFB6B6B6" Click="bFolderCurrencyLogs_Click" />
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="100" Margin="416,0,0,0" VerticalAlignment="Top" Width="414">
+        <Grid x:Name="GridDirectoryWeather" HorizontalAlignment="Left" Height="76" Margin="421,0,0,0" VerticalAlignment="Top" Width="409">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="White" Offset="0" />
-                    <GradientStop Color="#FF91C3FF" Offset="1" />
-                    <GradientStop Color="White" Offset="0.929" />
+                    <GradientStop Color="#FFD7E9FF" Offset="1" />
+                    <GradientStop Color="White" Offset="0.926" />
                 </LinearGradientBrush>
             </Grid.Background>
             <Label x:Name="label_Copy" Content="Директория логов погоды:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="177" />
             <TextBox x:Name="tbFolderWeatherLogs" HorizontalAlignment="Left" Height="23" Margin="0,26,0,0" TextWrapping="Wrap" Text="пусто" VerticalAlignment="Top" Width="274" />
             <Button x:Name="bFolderWeatherLogs" Content="Обзор" HorizontalAlignment="Left" Margin="274,26,0,0" VerticalAlignment="Top" Width="100" Height="23" Background="White" BorderBrush="#FFB6B6B6" Click="bFolderWeatherLogs_Click" />
+        </Grid>
+        <Grid x:Name="GridTabs" HorizontalAlignment="Left" Height="471" Margin="0,81,0,0" VerticalAlignment="Top" Width="830">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="#FFD7E9FF" Offset="1" />
+                    <GradientStop Color="White" Offset="0.936" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="471" VerticalAlignment="Top" Width="830">
+                <TabItem x:Name="tabCurrency" Header="Курсы валют">
+                    <Grid Background="White">
+                        <DataGrid x:Name="dgCurrency" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Height="329" Width="804" Loaded="dgCurrency_Loaded" />
+                        <Button x:Name="bShowCurrency" Content="Показать" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top" Width="75" Click="bShowCurrency_Click" />
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tabWeather" Header="Погода">
+                    <Grid Background="White" />
+                </TabItem>
+            </TabControl>
         </Grid>
     </Grid>
 </Window>
