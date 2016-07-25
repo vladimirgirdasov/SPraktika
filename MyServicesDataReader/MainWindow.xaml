@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyServicesDataReader"
         mc:Ignorable="d"
-        Title="MainWindow" Height="583.333" Width="837.879">
+        Title="MainWindow" Height="584.394" Width="956.667">
     <Grid x:Name="GridMain" Background="#FFD2F1FF">
         <Grid x:Name="GridDirectoryCurrency" Height="76" VerticalAlignment="Top" HorizontalAlignment="Left" Width="416">
             <Grid.Background>
@@ -19,7 +19,7 @@
             <TextBox x:Name="tbFolderCurrencyLogs" HorizontalAlignment="Left" Height="23" Margin="0,26,0,0" TextWrapping="Wrap" Text="пусто" VerticalAlignment="Top" Width="274" />
             <Button x:Name="bFolderCurrencyLogs" Content="Обзор" HorizontalAlignment="Left" Margin="274,26,0,0" VerticalAlignment="Top" Width="100" Height="23" Background="White" BorderBrush="#FFB6B6B6" Click="bFolderCurrencyLogs_Click" />
         </Grid>
-        <Grid x:Name="GridDirectoryWeather" HorizontalAlignment="Left" Height="76" Margin="421,0,0,0" VerticalAlignment="Top" Width="409">
+        <Grid x:Name="GridDirectoryWeather" HorizontalAlignment="Left" Height="76" Margin="540,0,0,0" VerticalAlignment="Top" Width="409">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="White" Offset="0" />
@@ -31,7 +31,7 @@
             <TextBox x:Name="tbFolderWeatherLogs" HorizontalAlignment="Left" Height="23" Margin="0,26,0,0" TextWrapping="Wrap" Text="пусто" VerticalAlignment="Top" Width="274" />
             <Button x:Name="bFolderWeatherLogs" Content="Обзор" HorizontalAlignment="Left" Margin="274,26,0,0" VerticalAlignment="Top" Width="100" Height="23" Background="White" BorderBrush="#FFB6B6B6" Click="bFolderWeatherLogs_Click" />
         </Grid>
-        <Grid x:Name="GridTabs" HorizontalAlignment="Left" Height="471" Margin="0,81,0,0" VerticalAlignment="Top" Width="830">
+        <Grid x:Name="GridTabs" Height="471" Margin="0,81,0,0" VerticalAlignment="Top">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="White" Offset="0" />
@@ -39,10 +39,10 @@
                     <GradientStop Color="White" Offset="0.936" />
                 </LinearGradientBrush>
             </Grid.Background>
-            <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="471" VerticalAlignment="Top" Width="830">
+            <TabControl x:Name="tabControl" Height="471" VerticalAlignment="Top">
                 <TabItem x:Name="tabCurrency" Header="Курсы валют">
                     <Grid Background="White">
-                        <DataGrid x:Name="dgCurrency" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Height="329" Width="804" />
+                        <DataGrid x:Name="dgCurrency" Margin="0,104,0,0" />
                         <Button x:Name="bShowCurrency" Content="Показать" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top" Width="176" Click="bShowCurrency_Click" Background="White" />
                         <Button x:Name="bUpdateCurrency" Content="Обновить данные и фильтры" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="176" Background="White" Click="bUpdateCurrency_Click" />
                         <ComboBox x:Name="cbCurrencyFilterDate" HorizontalAlignment="Left" Margin="219,50,0,0" VerticalAlignment="Top" Width="120" />
@@ -54,7 +54,19 @@
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabWeather" Header="Погода">
-                    <Grid Background="White" />
+                    <Grid Background="White">
+                        <DataGrid x:Name="dgWeather" Margin="0,114,0,0" VerticalAlignment="Top" Height="329" />
+                        <Button x:Name="bShowWeather" Content="Показать" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top" Width="176" Background="White" Click="bShowWeather_Click" />
+                        <Button x:Name="bUpdateWeather" Content="Обновить данные и фильтры" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="176" Background="White" Click="bUpdateWeather_Click" />
+                        <ComboBox x:Name="cbWeatherFilterDate" HorizontalAlignment="Left" Margin="219,50,0,0" VerticalAlignment="Top" Width="120" />
+                        <Label x:Name="label1_Copy2" Content="Дата:" HorizontalAlignment="Left" Margin="263,26,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.764,-0.554" />
+                        <ComboBox x:Name="cbWeatherFilterCity" HorizontalAlignment="Left" Margin="353,50,0,0" VerticalAlignment="Top" Width="120" />
+                        <Label x:Name="label1_Copy3" Content="Город:" HorizontalAlignment="Left" Margin="397,26,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.764,-0.554" />
+                        <ComboBox x:Name="cbWeatherFilterTimeOfDay" HorizontalAlignment="Left" Margin="486,50,0,0" VerticalAlignment="Top" Width="120" />
+                        <Label x:Name="label1_Copy4" Content="Время суток:" HorizontalAlignment="Left" Margin="508,26,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.764,-0.554" />
+                        <ComboBox x:Name="cbWeatherFilterSource" HorizontalAlignment="Left" Margin="619,50,0,0" VerticalAlignment="Top" Width="120" />
+                        <Label x:Name="label1_Copy5" Content="Источник:" HorizontalAlignment="Left" Margin="643,26,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.764,-0.554" />
+                    </Grid>
                 </TabItem>
             </TabControl>
         </Grid>

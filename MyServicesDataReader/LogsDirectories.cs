@@ -89,5 +89,11 @@ namespace MyServicesDataReader
             string[] all_logs = Directory.GetFiles(DirectoryCurrency, "CurrenciesLog__??.??.????.xml", SearchOption.TopDirectoryOnly);
             return all_logs;
         }
+
+        public static string[] Get_WeatherLogs_Paths()
+        {
+            string[] all_logs = Directory.GetFiles(DirectoryWeather, "WeatherLog__??.??.????.xml", SearchOption.TopDirectoryOnly);
+            return all_logs;
+        }
     }
 }

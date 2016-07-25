@@ -27,9 +27,9 @@ namespace MyServicesDataReader
                     foreach (XElement update in updates)
                     {
                         //Дата апдейта
-                        var datetime = update.Attribute("date").Value;
-                        var cur_date = datetime.Substring(0, 10);
-                        var cur_time = datetime.Substring(11, 8);
+                        var datetime = update.Attribute("date").Value.Split(' ');
+                        var cur_date = datetime[0];
+                        var cur_time = datetime[1];
 
                         //Проход по ресурсам
                         IEnumerable<XElement> resources = update.Descendants("currency_data");
