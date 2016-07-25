@@ -5,7 +5,9 @@ SParktika
 
 **2) Service_2GetWeather_and_CurrencyRates** - Windows Service 2 get currency rates with time-interval in *.xml file
 
-**2) Service_2GetWeather_and_CurrencyRates** - Windows Service 2 get weather with time-interval in *.xml file
+**3) Service_2GetWeather_and_CurrencyRates** - Windows Service 2 get weather with time-interval in *.xml file
+
+**4) MyServicesDataReader** - service's xmls visualizer
 
   #**Установка win service**:
   
