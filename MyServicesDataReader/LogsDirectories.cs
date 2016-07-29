@@ -10,8 +10,8 @@ namespace MyServicesDataReader
 {
     public static class LogsDirectories
     {
-        public static string DirectoryCurrency = @"";
-        public static string DirectoryWeather = @"";
+        public static string DirectoryCurrency = @"c:\";
+        public static string DirectoryWeather = @"C:\";
 
         private static string ConfigName = @"AppConfig.conf";
 
