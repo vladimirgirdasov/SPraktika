@@ -10,77 +10,41 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 
 namespace Service_2Get_Weather
 {
     public partial class Service_2Get_Weather : ServiceBase
     {
         private static System.Timers.Timer timerWeather;
-        private static int TimerInterval = 30 * 60 * 1000;//30 min
+        private static int TimerInterval;
 
-        private const string LogPartName = @"WeatherLog__";
+        private const string LogPartName = @"\\WeatherLog__";
         private const string LogExtension = @".xml";
-        private static string LogDir = @"D:\\WeatherInfoService\\";
-        private const string ConfigWay = @"D:\\WeatherInfoService\\config.conf";
-        private const string ReadmeWay = @"D:\\WeatherInfoService\\ReadMe.txt";
+        private static string LogDir = @"";
+        private const string ReadmeName = @"\\ReadMe.txt";
 
         //Файла старее параметра дней удаляются
-        private static int SaveFile_UpTo_N_days = 5;
+        private static int SaveFile_UpTo_N_days;
 
         private static YandexWeather yaWeather;
         private static Gismeteo gisWeather;
 
         private static void CreateReadMe()
         {
-            if (!File.Exists(ReadmeWay))
+            if (!File.Exists(LogDir + ReadmeName))
             {
                 string[] lines = { @"Погода предоставляется сервисами Яндекс.Погода и gismeteo.ru",
-                    @"Параметры конфига:",
+                    @"Входные параметры:",
                     @"1) - Интервал обновления в миллисекундах",
-                    @"2) - В конфиг Яндекс.Погода пишется форма https://export.yandex.ru/bar/reginfo.xml?region={region}",
+                    @"2) - Путь сохранения логов",
+                    @"3) - В конфиг Яндекс.Погода пишется форма https://export.yandex.ru/bar/reginfo.xml?region={region}",
                     @"где регион - id нужного региона, который можно взять из https://pogoda.yandex.ru/static/cities.xml",
-                    @"3) - В конфиг gismeteo писать html ссылку на gismeteo.Город",
-                    @"4) - Сервис хранит данные за последние (N) дней"
+                    @"4) - В конфиг gismeteo писать html ссылку на gismeteo.Город",
+                    @"5) - Сервис хранит данные за последние (N) дней"
                     };
-                File.WriteAllLines(ReadmeWay, lines);
+                File.WriteAllLines(LogDir + ReadmeName, lines);
             }
-        }
-
-        private static void ReadConfig()
-        {
-            if (!Directory.Exists(LogDir))
-                Directory.CreateDirectory(LogDir);
-            if (!File.Exists(ConfigWay))
-            {
-                File.WriteAllText(ConfigWay, TimerInterval.ToString() + "|" + LogDir + "|" + YandexWeather.DefaultHref + "|" + Gismeteo.DefaultHref + "|" + SaveFile_UpTo_N_days.ToString());
-            }
-            else
-            {
-                try
-                {
-                    var data = File.ReadAllText(ConfigWay).Split('|');
-                    TimerInterval = Convert.ToInt32(data[0]);
-                    LogDir = data[1];
-                    yaWeather.href = data[2];
-                    gisWeather.href = data[3];
-                    SaveFile_UpTo_N_days = int.Parse(data[4]);
-                }
-                catch (Exception e)
-                {
-                    TimerInterval = 30 * 60 * 1000;
-                    LogDir = @"D:\\WeatherInfoService\\";
-                    yaWeather.href = YandexWeather.DefaultHref;
-                    gisWeather.href = Gismeteo.DefaultHref;
-                    SaveFile_UpTo_N_days = 5;
-
-                    string[] str = { "Target site: " + e.TargetSite.ToString() + "    Message: " + e.Message + "    Source: " + e.Source };
-                    File.AppendAllLines("D:\\WeatherInfoService\\" + "Error.txt", str);
-                }
-            }
-            if (yaWeather.href == "")
-                yaWeather.href = YandexWeather.DefaultHref;
-            if (gisWeather.href == "")
-                gisWeather.href = Gismeteo.DefaultHref;
         }
 
         public Service_2Get_Weather()
@@ -96,7 +60,39 @@ namespace Service_2Get_Weather
         {
             yaWeather = new YandexWeather();
             gisWeather = new Gismeteo();
-            ReadConfig();
+
+            bool args_ok = false;
+
+            if (args == null)
+                args_ok = false;
+            else
+            if (args.Count() != 5)
+                args_ok = false;
+            else
+            if ((int.TryParse(args[0], out TimerInterval) && Directory.Exists(args[1]) && int.TryParse(args[4], out SaveFile_UpTo_N_days)) == false)
+                args_ok = false;
+            else
+            {
+                LogDir = args[1];
+                yaWeather.href = args[2];
+                gisWeather.href = args[3];
+                args_ok = true;
+            }
+
+            if (args_ok == false)
+            {
+                EventLog.WriteEntry("Служба остановлена. В обозревателе служб задайте входные параметры через пробел. " +
+                    @"1) - Интервал обновления в миллисекундах " +
+                    @"2) - Путь сохранения логов " +
+                    @"3) - В конфиг Яндекс.Погода пишется форма https://export.yandex.ru/bar/reginfo.xml?region={region} " +
+                    @"где регион - id нужного региона, который можно взять из https://pogoda.yandex.ru/static/cities.xml " +
+                    @"4) - В конфиг gismeteo писать html ссылку на gismeteo.Город " +
+                    @"5) - Сервис хранит данные за последние (N) дней");
+                this.Stop();
+            }
+
+            EventLog.WriteEntry("Ок, интервал обновления=" + TimerInterval.ToString() + " Путь сохранения=" + LogDir + " Период хранения=" + SaveFile_UpTo_N_days);
+
             CreateReadMe();
             UpdateWeatherInfo();
             Weather_Writer.WeatherWrite(LogDir + LogPartName + DateTime.Today.ToString("dd'.'MM'.'yyyy") + LogExtension, yaWeather, gisWeather);
@@ -122,7 +118,6 @@ namespace Service_2Get_Weather
         {
             yaWeather = new YandexWeather();
             gisWeather = new Gismeteo();
-            ReadConfig();
             UpdateWeatherInfo();
             Weather_Writer.WeatherWrite(LogDir + LogPartName + DateTime.Today.ToString("dd'.'MM'.'yyyy") + LogExtension, yaWeather, gisWeather);
             Check_Old_Logs_To_Delete();

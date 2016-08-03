@@ -80,8 +80,6 @@ namespace Service_2Get_Weather
             }
             catch (Exception e)
             {
-                string[] str = { "YandexWeather.Read= Target site: " + e.TargetSite.ToString() + "    Message: " + e.Message + "    Source: " + e.Source };
-                File.AppendAllLines("D:\\WeatherInfoService\\" + "Error.txt", str);
             }
         }
 
