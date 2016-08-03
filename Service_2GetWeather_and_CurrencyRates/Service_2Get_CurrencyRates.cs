@@ -60,7 +60,7 @@ namespace Service_2Get_CurrencyRates
             {
                 if (update_done)
                 {
-                    CurrencyRates_Writer.CurrencyWrite(LogDir + LogPartName + DateTime.Today.ToString("d") + LogExtension, cbrData, blrData, ecbData, yfData, avgData);
+                    CurrencyRates_Writer.CurrencyWrite(LogDir + LogPartName + DateTime.Today.ToString("d'.'MM'.'yyyy") + LogExtension, cbrData, blrData, ecbData, yfData, avgData);
                     break;
                 }
                 Thread.Sleep(250);
@@ -108,7 +108,7 @@ namespace Service_2Get_CurrencyRates
                 int id = all_logs[i].IndexOf("CurrenciesLog__");
                 string date_Line = all_logs[i].Substring(id + "CurrenciesLog__".Length, 10);
                 //Если не парсится - ставим минимальную дату и удалим)))
-                if (!DateTime.TryParseExact(date_Line, "d", null, System.Globalization.DateTimeStyles.None, out all_dates[i]))
+                if (!DateTime.TryParseExact(date_Line, "d'.'MM'.'yyyy", null, System.Globalization.DateTimeStyles.None, out all_dates[i]))
                     all_dates[i] = DateTime.MinValue;
             }
             //Удаляем старые файлы:

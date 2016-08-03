@@ -99,7 +99,7 @@ namespace Service_2Get_Weather
             ReadConfig();
             CreateReadMe();
             UpdateWeatherInfo();
-            Weather_Writer.WeatherWrite(LogDir + LogPartName + DateTime.Today.ToString("d") + LogExtension, yaWeather, gisWeather);
+            Weather_Writer.WeatherWrite(LogDir + LogPartName + DateTime.Today.ToString("d'.'MM'.'yyyy") + LogExtension, yaWeather, gisWeather);
             Check_Old_Logs_To_Delete();
             SetTimer(TimerInterval);
         }
@@ -124,7 +124,7 @@ namespace Service_2Get_Weather
             gisWeather = new Gismeteo();
             ReadConfig();
             UpdateWeatherInfo();
-            Weather_Writer.WeatherWrite(LogDir + LogPartName + DateTime.Today.ToString("d") + LogExtension, yaWeather, gisWeather);
+            Weather_Writer.WeatherWrite(LogDir + LogPartName + DateTime.Today.ToString("d'.'MM'.'yyyy") + LogExtension, yaWeather, gisWeather);
             Check_Old_Logs_To_Delete();
         }
 
@@ -151,7 +151,7 @@ namespace Service_2Get_Weather
                 int id = all_logs[i].IndexOf("WeatherLog__");
                 string date_Line = all_logs[i].Substring(id + "WeatherLog__".Length, 10);
                 //Если не парсится - ставим минимальную дату и удалим)))
-                if (!DateTime.TryParseExact(date_Line, "d", null, System.Globalization.DateTimeStyles.None, out all_dates[i]))
+                if (!DateTime.TryParseExact(date_Line, "d'.'MM'.'yyyy", null, System.Globalization.DateTimeStyles.None, out all_dates[i]))
                     all_dates[i] = DateTime.MinValue;
             }
             //Удаляем старые файлы:
