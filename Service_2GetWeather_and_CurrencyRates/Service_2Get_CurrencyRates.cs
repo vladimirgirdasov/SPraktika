@@ -44,11 +44,10 @@ namespace Service_2Get_CurrencyRates
         }
 
         //Directories/Config
-        private const string LogPartName = @"CurrenciesLog__";
+        private const string LogPartName = @"\\CurrenciesLog__";
         private const string LogExtension = @".xml";
-        private static string LogDir = @"D:\\CurrencyInfoService\\";
-        private const string ConfigWay = @"D:\\CurrencyInfoService\\config.conf";
-        private const string ReadMeWay = @"D:\\CurrencyInfoService\\ReadMe.txt";
+        private static string LogDir = @"";
+        private const string ReadMeName = @"\\ReadMe.txt";
 
         private static int SaveFile_UpTo_N_days = 5;
 
@@ -64,32 +63,6 @@ namespace Service_2Get_CurrencyRates
                     break;
                 }
                 Thread.Sleep(250);
-            }
-        }
-
-        private static void Read_or_Create_Config()
-        {
-            if (!Directory.Exists(LogDir))
-                Directory.CreateDirectory(LogDir);
-            if (!File.Exists(ConfigWay))
-            {
-                File.WriteAllText(ConfigWay, TimerInterval.ToString() + "|" + LogDir + "|" + SaveFile_UpTo_N_days.ToString());
-            }
-            else
-            {
-                try
-                {
-                    var data = File.ReadAllText(ConfigWay).Split('|');
-                    TimerInterval = Convert.ToInt32(data[0]);
-                    LogDir = data[1];
-                    SaveFile_UpTo_N_days = int.Parse(data[2]);
-                }
-                catch (Exception e)
-                {
-                    TimerInterval = 10 * 60 * 1000;
-                    LogDir = "D:\\CurrencyInfoService\\";
-                    SaveFile_UpTo_N_days = 5;
-                }
             }
         }
 
@@ -122,12 +95,12 @@ namespace Service_2Get_CurrencyRates
 
         private static void Create_ReadMe()
         {
-            string[] lines = { "Параметры конфига разделяется символом (|)",
+            string[] lines = { "Входные параметры",
                 "1) - Интервал обновления данных в миллисекундах",
                 "2) - Путь для сохранения логов",
                 "3 - Сервис хранит данные за последние (N) дней",
                 "Чтобы сервис не удалял старые логи, поставьте в третьем параметре число x<=(0)" };
-            File.WriteAllLines(ReadMeWay, lines);
+            File.WriteAllLines(LogDir + ReadMeName, lines);
         }
 
         public Service_2Get_CurrencyRates()
@@ -141,7 +114,34 @@ namespace Service_2Get_CurrencyRates
 
         protected override void OnStart(string[] args)
         {
-            Read_or_Create_Config();
+            bool args_ok = false;
+
+            if (args == null)
+                args_ok = false;
+            else
+            if (args.Count() != 3)
+                args_ok = false;
+            else
+            if ((int.TryParse(args[0], out TimerInterval) && Directory.Exists(args[1]) && int.TryParse(args[2], out SaveFile_UpTo_N_days)) == false)
+                args_ok = false;
+            else
+            {
+                LogDir = args[1];
+                args_ok = true;
+            }
+
+            if (args_ok == false)
+            {
+                EventLog.WriteEntry("Служба остановлена. В обозревателе служб задайте входные параметры через пробел. " +
+                     " 1) - Интервал обновления данных в миллисекундах" +
+                " 2) - Путь для сохранения логов" +
+                " 3) - Сервис хранит данные за последние (N) дней" +
+                "Чтобы сервис не удалял старые логи, поставьте в третьем параметре число x<=(0)");
+                this.Stop();
+            }
+
+            EventLog.WriteEntry("Ок, интервал обновления=" + TimerInterval.ToString() + " Путь сохранения=" + LogDir + " Период хранения=" + SaveFile_UpTo_N_days);
+
             Create_ReadMe();
             Update_And_Write_Data();
             Check_Old_Logs_To_Delete();

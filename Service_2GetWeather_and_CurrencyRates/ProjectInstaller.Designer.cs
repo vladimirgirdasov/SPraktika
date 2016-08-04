@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectInstaller));
             this.serviceProcessInstaller1 = new System.ServiceProcess.ServiceProcessInstaller();
             this.serviceInstaller1 = new System.ServiceProcess.ServiceInstaller();
             // 
@@ -39,7 +40,7 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.Description = "Сбор информации о валюте по таймеру, конфиг в D:\\CurrencyInfoService";
+            this.serviceInstaller1.Description = resources.GetString("serviceInstaller1.Description");
             this.serviceInstaller1.ServiceName = "Service_2Get_CurrencyRates";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectInstaller));
             this.serviceProcessInstaller1 = new System.ServiceProcess.ServiceProcessInstaller();
             this.serviceInstaller1 = new System.ServiceProcess.ServiceInstaller();
             // 
@@ -39,7 +40,7 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.Description = "Погода предоставляется сервисами Яндекс.Погода и gismeteo.ru\",";
+            this.serviceInstaller1.Description = resources.GetString("serviceInstaller1.Description");
             this.serviceInstaller1.ServiceName = "Service_2Get_Weather";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 

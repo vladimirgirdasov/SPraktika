@@ -123,6 +123,9 @@
   <metadata name="serviceInstaller1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>196, 17</value>
   </metadata>
+  <data name="serviceInstaller1.Description" xml:space="preserve">
+    <value>В обозревателе служб задайте входные параметры через пробел. 1) - Интервал обновления в миллисекундах 2) - Путь сохранения логов 3) - В конфиг Яндекс.Погода пишется форма https://export.yandex.ru/bar/reginfo.xml?region={region} где регион - id нужного региона, который можно взять из https://pogoda.yandex.ru/static/cities.xml 4) - В конфиг gismeteo писать html ссылку на gismeteo.Город 5) - Сервис хранит данные за последние (N) дней"</value>
+  </data>
   <metadata name="$this.TrayLargeIcon" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
